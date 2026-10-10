@@ -1,0 +1,35 @@
+{
+  "summary": "First end-to-end test of VERIDEX. Backend: 31 pytest tests all passed covering health, auth (including brute force), networks, full release workflow (project → release → evidence → seal → review → attest → deployment on live Ethereum RPC), evidence integrity + tamper, authorization (private project 404 for other user, demo visible), demo drift simulation + dedup + incident transitions (OPEN→ACK→INV→RESOLVED + invalid 409), tamper demo, overview trust-score (5 components), graph + public graph, networks LIVE/UNAVAILABLE/DEMO. Frontend: landing renders with headline + trust graph preview; all 15 protected routes load without JS errors; demo page simulate-drift shows critical-drift-banner with correct copy; incident open from banner, acknowledge works; reset-drift clears banner; trust graph 2D toggle renders trust-graph-2d; developer hash tool produces sha256 hash and shows hash-tool-error on invalid JSON. Zero console errors across the whole session.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/auth/login", "issue": "Brute-force lockout keyed on client.host:email, but in this preview K8s ingress the inbound client.host rotates across pods so attempts never accumulate past MAX_ATTEMPTS. Required 15 bad logins to observe a 429 in some runs; may silently never lock. Recommend keying on just lower-cased email (plus X-Forwarded-For when trustable) rather than request.client.host."},
+      {"endpoint": "/api/releases/{rid}/deployments (baseline_from_observation)", "issue": "Public Ethereum RPC publicnode.com intermittently returns 'RpcError: block not found: 0x...' on back-to-back eth_blockNumber + eth_getBlockByNumber calls (load-balanced nodes race). Treated as UNAVAILABLE even when network is up; also surfaces as HTTP 424 on real baselining. Recommend retrying eth_getBlockByNumber once on 'block not found' with the latest known block, or falling back to 'latest' tag."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_veridex_api.py",
+    "/app/test_reports/pytest/veridex_api.xml"
+  ],
+  "action_items": [
+    "Consider making the login lockout dedup key independent of request.client.host (e.g. email only, or trusted X-Forwarded-For). Current implementation is not effective behind the K8s ingress.",
+    "Add a one-shot retry to the Ethereum observer when eth_getBlockByNumber returns 'block not found' so that baseline_from_observation does not fail during normal RPC propagation delays."
+  ],
+  "critical_code_review_comments": [
+    "backend/veridex/auth.py: brute-force dedup keyed on request.client.host is unreliable behind reverse proxies / K8s ingress; use lower-cased email as the primary key.",
+    "backend/veridex/chains.py (observer): no retry logic for the common publicnode race where blockNumber returns a block that the next getBlockByNumber call cannot yet find. Causes legitimate deployments to 424.",
+    "backend/server.py: CORS allow_origins pulled from FRONTEND_URL + localhost only. CORS_ORIGINS='*' in .env is unused — intentional but worth documenting."
+  ],
+  "updated_files": ["/app/backend/tests/test_veridex_api.py"],
+  "success_rate": {"backend": "100% (31/31 pytest)", "frontend": "100% (all tested flows + 15 routes clean)"},
+  "test_credentials": "Admin admin@veridex.dev / Veridex!2026 (from /app/memory/test_credentials.md). Fresh test users were registered via /api/auth/register for E2E and cross-user authorization.",
+  "seed_data_creation": "Demo project prj_demo_aurora and dep_demo_vault are auto-seeded on backend startup. Test created a throwaway project 'TEST_e2e_proj' + deployment 'TEST_aave' pointing at the public Aave V3 Pool address 0x87870bca... on Ethereum mainnet (LIVE read-only). Demo state was reset at end of run.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend pytest file at /app/backend/tests/test_veridex_api.py — 31 tests, run with `python -m pytest tests/test_veridex_api.py -n 0`. The pytest.ini pins -n 2 loadscope by default; -n 0 is safer here because the full E2E workflow in TestEvidence/TestSealApproveAttestDeploy shares a module-scoped fixture (`e2e_state`) that must run sequentially. Field names on backend: /api/networks returns 'label' (LIVE/UNAVAILABLE/DEMO), findings use 'rule' not 'code', deployments carry 'verification_status' and incident_id lives on simulate-drift response. ethereum-mainnet publicnode RPC is flaky — allow retries. All frontend data-testids referenced in the review request exist and work. Demo state is shared across users — remember to POST /api/deployments/dep_demo_vault/reset-demo after any destructive demo test."
+}

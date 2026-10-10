@@ -174,10 +174,13 @@ async def observe(deployment: dict) -> dict:
                 "error": f"{net['env']} is not configured"}
     t0 = time.monotonic()
     try:
-        if net["family"] == "evm":
-            res = await observe_evm(url, deployment["address"])
-        else:
-            res = await observe_solana(url, deployment["address"])
+        fn = observe_evm if net["family"] == "evm" else observe_solana
+        try:
+            res = await fn(url, deployment["address"])
+        except RpcError as e:
+            if "not found" not in str(e).lower():
+                raise
+            res = await fn(url, deployment["address"])  # load-balanced RPC nodes can lag one block; retry once
         await _record_status(nid, True, int((time.monotonic() - t0) * 1000), ref=res["block_ref"])
         return {"mode": "LIVE", "error": None, "rpc_host": safe_host(url), **res}
     except (RpcError, httpx.HTTPError, ValueError, KeyError, TypeError) as e:
