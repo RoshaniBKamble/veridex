@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAction, useApi } from "@/lib/hooks";
 import { fmtTime, post } from "@/lib/api";
-import { ErrorNote, KV, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
+import { Empty, ErrorNote, Hash, KV, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
 import { Btn, Table, Td, inputCls } from "@/components/vx/Controls";
 import { EntityLink } from "@/components/vx/Workflow";
 import { CreateReleaseForm } from "@/components/vx/CreateReleaseForm";
@@ -15,7 +15,7 @@ function Members({ p }) {
     <Panel eyebrow="Team" title="Members & roles">
       <div className="space-y-2">
         {p.members.map((m) => (
-          <div key={m.user_id} className="flex items-center justify-between text-sm"><span className="text-slate-200">{m.name} <span className="font-mono text-[11px] text-slate-500">{m.email}</span></span><StatusBadge status="INFO" label={m.role} /></div>
+          <div key={m.user_id} className="flex flex-wrap items-center justify-between gap-2 text-sm"><span className="min-w-0 break-words text-slate-200">{m.name} <span className="font-mono text-[11px] text-slate-500">{m.email}</span></span><StatusBadge status="INFO" label={m.role} /></div>
         ))}
       </div>
       {!p.is_demo && p.my_role === "owner" && (
@@ -43,24 +43,27 @@ export default function ProjectDetail() {
   return (
     <div data-testid="project-detail-page">
       <PageHeader eyebrow="Project" title={p.name} description={p.description} actions={<>{p.is_demo && <StatusBadge status="DEMO" />}<StatusBadge status="INFO" label={`role: ${p.my_role}`} /></>} />
-      <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
-        <div className="space-y-6">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="min-w-0 space-y-6">
           {canWrite && <Panel eyebrow="Step 1" title="Create a release"><CreateReleaseForm projectId={id} /></Panel>}
           <Panel title="Releases" bodyClass="p-0">
+            {!releases.length ? <div className="p-5"><Empty title="No releases yet">Create a release above to start collecting evidence.</Empty></div> : (
             <Table head={["Version", "Status", "Commit", "Evidence", "Manifest", "Created"]} testId="project-releases-table">
               {releases.map((r) => (
                 <tr key={r.id} className="vx-row">
                   <Td><EntityLink to={`/app/releases/${r.id}`} testId={`release-link-${r.id}`}>{r.version}</EntityLink></Td>
                   <Td><StatusBadge status={r.status} /></Td>
-                  <Td className="font-mono text-[11px]">{r.commit.slice(0, 10)}</Td>
+                  <Td className="font-mono text-[11px]" title={r.commit}>{r.commit.slice(0, 10)}</Td>
                   <Td className="font-mono text-xs">{r.evidence_ids.length}</Td>
-                  <Td className="font-mono text-[11px] text-emerald-300/80">{r.manifest_hash ? r.manifest_hash.slice(0, 18) + "…" : "—"}</Td>
+                  <Td>{r.manifest_hash ? <Hash value={r.manifest_hash} /> : <span className="font-mono text-xs text-slate-500">—</span>}</Td>
                   <Td className="text-xs text-slate-500">{fmtTime(r.created_at)}</Td>
                 </tr>
               ))}
             </Table>
+            )}
           </Panel>
           <Panel title="Deployments" bodyClass="p-0">
+            {!deps.length ? <div className="p-5"><Empty title="No deployments yet">Open an attested release to register a deployment.</Empty></div> : (
             <Table head={["Label", "Network", "Release", "Status", "Mode"]}>
               {deps.map((d) => (
                 <tr key={d.id} className="vx-row">
@@ -70,9 +73,10 @@ export default function ProjectDetail() {
                 </tr>
               ))}
             </Table>
+            )}
           </Panel>
         </div>
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <Panel title="Details">
             <KV k="Project ID"><span className="font-mono text-xs">{p.id}</span></KV>
             <KV k="Repository"><span className="font-mono text-xs">{p.repository}</span></KV>

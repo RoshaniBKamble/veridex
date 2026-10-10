@@ -2,7 +2,7 @@ import { useState } from "react";
 import { RefreshCcw, ScanSearch } from "lucide-react";
 import { useAction, useApi } from "@/lib/hooks";
 import { ago, post } from "@/lib/api";
-import { Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
+import { Empty, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
 import { Btn, Field, inputCls } from "@/components/vx/Controls";
 
 function Inspector({ networks }) {
@@ -27,10 +27,10 @@ function Inspector({ networks }) {
             <StatusBadge status={res.mode} /> {res.block_ref} {res.rpc_host && `· via ${res.rpc_host}`} {res.error && <span className="text-amber-300">{res.error}</span>}
           </div>
           {Object.entries(res.fields).map(([k, f]) => (
-            <div key={k} className="grid grid-cols-[180px_1fr_auto] gap-3 border-b border-white/[0.04] px-4 py-2 text-xs last:border-0">
+            <div key={k} className="grid grid-cols-1 gap-1 border-b border-white/[0.04] px-4 py-2 text-xs last:border-0 sm:grid-cols-[180px_minmax(0,1fr)_auto] sm:gap-3">
               <span className="font-mono text-slate-400">{k}</span>
-              <span className="break-all font-mono text-[11px] text-slate-200">{f.value ?? "—"}<span className="block text-[10px] text-slate-500">{f.source}</span></span>
-              <StatusBadge status={f.status === "OBSERVED" ? "LIVE" : f.status} />
+              <span className="min-w-0 break-all font-mono text-[11px] text-slate-200">{f.value ?? "—"}<span className="block text-[10px] text-slate-500">{f.source}</span></span>
+              <span><StatusBadge status={f.status === "OBSERVED" ? "LIVE" : f.status} /></span>
             </div>
           ))}
         </div>
@@ -47,15 +47,15 @@ export default function Integrations() {
       <PageHeader eyebrow="Blockchain adapters" title="Integrations"
         description="Each adapter reports exactly what it can observe. Unconfigured networks are UNAVAILABLE, never assumed healthy."
         actions={<Btn icon={RefreshCcw} loading={busy === "c"} data-testid="check-networks-btn" onClick={() => run("c", () => post("/networks/check"), "Connectivity re-checked")}>Check all</Btn>} />
-      {isLoading ? <Loading /> : (
+      {isLoading ? <Loading /> : !data.length ? <Empty title="No network adapters reported">The API returned no adapters. Check backend configuration.</Empty> : (
         <div className="grid gap-4 lg:grid-cols-2">
           {data.map((n) => (
             <Panel key={n.id} eyebrow={n.family} title={n.name} testId={`network-card-${n.id}`} action={<StatusBadge status={n.label} pulse={n.label === "LIVE"} />}>
-              <div className="grid grid-cols-2 gap-x-6 gap-y-2 font-mono text-[11px] text-slate-400">
-                <span>Env var</span><span className="text-slate-200">{n.env_var || "—"}</span>
-                <span>RPC host</span><span className="text-slate-200">{n.rpc_host || "not configured"}</span>
-                <span>Identity</span><span className="text-slate-200">{n.expected_identity}</span>
-                <span>Last success</span><span className="text-slate-200">{ago(n.last_success_at)} {n.last_ref && `· ${n.last_ref}`}</span>
+              <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] gap-x-4 gap-y-2 font-mono text-[11px] text-slate-400 sm:grid-cols-[110px_minmax(0,1fr)]">
+                <span>Env var</span><span className="break-all text-slate-200">{n.env_var || "—"}</span>
+                <span>RPC host</span><span className="break-all text-slate-200">{n.rpc_host || "not configured"}</span>
+                <span>Identity</span><span className="break-words text-slate-200">{n.expected_identity}</span>
+                <span>Last success</span><span className="break-words text-slate-200">{ago(n.last_success_at)} {n.last_ref && `· ${n.last_ref}`}</span>
                 <span>Latency</span><span className="text-slate-200">{n.latency_ms != null ? `${n.latency_ms} ms` : "—"}</span>
               </div>
               {n.last_error && <div className="mt-3 rounded border border-amber-500/30 bg-amber-500/[0.06] px-3 py-2 text-[11px] text-amber-200">{n.last_error}</div>}

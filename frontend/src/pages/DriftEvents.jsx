@@ -19,8 +19,8 @@ export default function DriftEvents() {
               <tr key={e.id} className="vx-row">
                 <Td className="font-mono text-[11px] text-slate-500">{fmtTime(e.detected_at)}</Td>
                 <Td className="font-mono text-xs">{e.field}{e.simulated && <StatusBadge status="SIMULATED" className="ml-2" />}</Td>
-                <Td className="max-w-[170px] break-all font-mono text-[11px] text-emerald-300/80">{e.expected}</Td>
-                <Td className="max-w-[170px] break-all font-mono text-[11px] text-red-300">{e.observed}</Td>
+                <Td className="font-mono text-[11px] text-emerald-300/80"><div className="min-w-[120px] max-w-[200px] break-all">{String(e.expected ?? "—")}</div></Td>
+                <Td className="font-mono text-[11px] text-red-300"><div className="min-w-[120px] max-w-[200px] break-all">{String(e.observed ?? "—")}</div></Td>
                 <Td><StatusBadge status={e.severity} /></Td>
                 <Td className="font-mono text-xs">{e.occurrences}×</Td>
                 <Td><StatusBadge status={e.status} /></Td>

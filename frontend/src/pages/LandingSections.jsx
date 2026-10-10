@@ -47,15 +47,15 @@ export function LandingSections({ graph }) {
               <StatusBadge status="SIMULATED" className="ml-auto" />
             </div>
             <div className="px-5 py-4 text-sm text-slate-300">Production no longer matches the approved state.</div>
-            <div className="grid grid-cols-[130px_1fr_1fr] gap-x-4 border-t border-white/[0.06] px-5 py-3 font-mono text-[10.5px] uppercase tracking-wider text-slate-500">
+            <div className="grid grid-cols-[96px_1fr_1fr] gap-x-3 border-t border-white/[0.06] px-5 py-3 font-mono text-[10.5px] uppercase tracking-wider text-slate-500 sm:grid-cols-[130px_1fr_1fr] sm:gap-x-4">
               <span>Field</span><span>Approved</span><span>Observed after simulation</span>
             </div>
             {(rows.length ? rows : [{ field: "implementation", expected: "0x5f3c…6e20" }, { field: "proxy_admin", expected: "0x9a1e…8a01" }]).map((r) => {
               const drifted = ["implementation", "implementation_code_hash", "proxy_admin"].includes(r.field);
               return (
-                <div key={r.field} className="grid grid-cols-[130px_1fr_1fr] gap-x-4 border-t border-white/[0.04] px-5 py-2.5 font-mono text-[11px]">
-                  <span className="text-slate-400">{r.field}</span>
-                  <span className="truncate text-emerald-300/90">{String(r.expected).slice(0, 18)}…</span>
+                <div key={r.field} className="grid grid-cols-[96px_1fr_1fr] gap-x-3 border-t border-white/[0.04] px-5 py-2.5 font-mono text-[11px] sm:grid-cols-[130px_1fr_1fr] sm:gap-x-4">
+                  <span className="break-all text-slate-400">{r.field}</span>
+                  <span className="truncate text-emerald-300/90" title={String(r.expected)}>{String(r.expected).slice(0, 18)}…</span>
                   <span className={drifted ? "text-red-300" : "text-emerald-300/90"}>{drifted ? "changed → MISMATCH" : "unchanged → MATCH"}</span>
                 </div>
               );

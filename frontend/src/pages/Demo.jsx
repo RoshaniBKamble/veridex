@@ -3,7 +3,7 @@ import { FlaskConical, RotateCcw, DatabaseZap } from "lucide-react";
 import { DEMO_PROJECT, useAuth } from "@/context/AuthContext";
 import { useAction, useApi } from "@/lib/hooks";
 import { post } from "@/lib/api";
-import { Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
+import { Empty, ErrorNote, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
 import { Btn } from "@/components/vx/Controls";
 import { ComparisonTable } from "@/pages/DeploymentDetail";
 import { TrustGraph } from "@/components/graph/TrustGraph";
@@ -13,11 +13,20 @@ const DEMO_DEP = "dep_demo_vault";
 export default function Demo() {
   const { projectId, setProjectId } = useAuth();
   const onDemo = projectId === DEMO_PROJECT;
-  const { data: dep, isLoading } = useApi(["deployment", DEMO_DEP], `/deployments/${DEMO_DEP}`);
+  const { data: dep, isLoading, error } = useApi(["deployment", DEMO_DEP], `/deployments/${DEMO_DEP}`);
   const { data: rel } = useApi(["release", dep?.release_id], dep ? `/releases/${dep.release_id}` : null);
   const { data: graph } = useApi(["graph", DEMO_PROJECT], `/projects/${DEMO_PROJECT}/graph`);
   const { run, busy } = useAction();
   if (isLoading) return <Loading />;
+  if (error || !dep) {
+    return (
+      <div data-testid="demo-page">
+        <PageHeader eyebrow="Demo environment · SIMULATED" title="Controlled drift demonstration" />
+        <ErrorNote error="The demo deployment could not be loaded. Rebuild the demo data to restore the Aurora project and its simulated deployment." />
+        <div className="mt-4"><Btn variant="demo" icon={DatabaseZap} loading={busy === "x"} data-testid="demo-reseed-btn" onClick={() => run("x", () => post("/demo/reseed"), "Demo project re-seeded")}>Rebuild demo data</Btn></div>
+      </div>
+    );
+  }
   const openInc = dep.incidents.find((i) => i.status !== "RESOLVED");
   const testEv = rel?.evidence.find((e) => e.type === "test_report");
   const steps = [
@@ -33,8 +42,8 @@ export default function Demo() {
       <PageHeader eyebrow="Demo environment · SIMULATED" title="Controlled drift demonstration"
         description="Aurora Lending Protocol is fictional. Its chain is an in-process simulator. SIMULATE DRIFT changes the simulated proxy implementation, implementation bytecode and proxy admin — then VERIDEX re-observes and compares against the approved expected state. Nothing here is a real attack or transaction."
         actions={!onDemo && <Btn data-testid="demo-switch-project-btn" onClick={() => setProjectId(DEMO_PROJECT)}>Switch to demo project</Btn>} />
-      <div className="grid gap-6 xl:grid-cols-[360px_1fr]">
-        <div className="space-y-6">
+      <div className="grid gap-6 xl:grid-cols-[360px_minmax(0,1fr)]">
+        <div className="min-w-0 space-y-6">
           <Panel eyebrow="Walkthrough" title="Inspect before you break it">
             <ol className="space-y-3">
               {steps.map(([t, c], i) => (
@@ -55,9 +64,9 @@ export default function Demo() {
             {openInc && <Link to={`/app/incidents/${openInc.id}`} data-testid="demo-open-incident-link" className="mt-4 block rounded border border-red-500/40 bg-red-500/[0.06] px-3 py-2.5 text-xs text-red-200">{openInc.number} opened → investigate evidence</Link>}
           </Panel>
         </div>
-        <div className="space-y-6">
-          <Panel eyebrow={`Expected v${dep.expected.version} vs ${dep.last_block_ref}`} title="Verification result" bodyClass="p-0"><ComparisonTable rows={dep.comparisons} /></Panel>
-          {graph && <TrustGraph graph={graph} height={420} />}
+        <div className="min-w-0 space-y-6">
+          <Panel eyebrow={`Expected v${dep.expected.version} vs ${dep.last_block_ref || "no observation"}`} title="Verification result" bodyClass="p-0"><ComparisonTable rows={dep.comparisons} /></Panel>
+          {graph ? <TrustGraph graph={graph} height={420} /> : <Empty title="Loading trust graph" testId="demo-graph-empty">Graph records are being fetched for the demo project.</Empty>}
         </div>
       </div>
     </div>

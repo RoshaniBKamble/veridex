@@ -37,7 +37,7 @@ const STEPS = [
 ];
 
 export default function Landing() {
-  const { data: graph } = useQuery({ queryKey: ["public-graph"], queryFn: () => get("/public/demo-graph"), retry: 1 });
+  const { data: graph, isError } = useQuery({ queryKey: ["public-graph"], queryFn: () => get("/public/demo-graph"), retry: 1 });
   return (
     <div className="min-h-screen bg-[#07090D] text-slate-200">
       <Nav />
@@ -73,7 +73,9 @@ export default function Landing() {
               <StatusBadge status="DEMO" label="Demo project" />
             </div>
             {graph ? <TrustGraph graph={graph} height={430} compact interactive={false} /> :
-              <div className="grid h-[430px] place-items-center rounded-lg border border-white/[0.08] font-mono text-xs text-slate-500">Loading graph…</div>}
+              <div className="grid h-[430px] place-items-center rounded-lg border border-white/[0.08] px-6 text-center font-mono text-xs text-slate-500" data-testid="landing-graph-placeholder">
+                {isError ? "Demo graph unavailable — the API could not be reached. Sign in to view project records." : "Loading graph…"}
+              </div>}
             <p className="font-mono text-[10.5px] text-slate-600">Every node is a stored record: repository → evidence → manifest → approval → attestation → deployment → chain → authority → production.</p>
           </motion.div>
         </div>

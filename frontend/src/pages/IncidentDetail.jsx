@@ -52,24 +52,25 @@ export default function IncidentDetail() {
       <PageHeader eyebrow={`${inc.project.name} · ${inc.number}`} title={inc.title} description={inc.summary}
         actions={<><StatusBadge status={inc.severity} /><StatusBadge status={inc.status} testId="incident-status-badge" pulse={inc.status === "OPEN"} />{inc.simulated && <StatusBadge status="SIMULATED" />}</>} />
       {inc.simulated && <div className="mb-6 rounded-md border border-violet-500/30 bg-violet-500/[0.06] px-4 py-3 text-xs text-violet-200">This incident was produced by a controlled demo-state change. It is not a real attack or real blockchain transaction.</div>}
-      <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
-        <div className="space-y-6">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="min-w-0 space-y-6">
           <Panel eyebrow="What changed" title="Expected vs observed" testId="incident-drift-list">
+            {!inc.drift_events.length && <div className="text-xs text-slate-500">No drift events are linked to this incident.</div>}
             {inc.drift_events.map((e) => (
-              <div key={e.id} className="mb-3 rounded border border-red-500/25 bg-red-500/[0.04] p-4 last:mb-0">
-                <div className="flex items-center justify-between"><span className="font-mono text-sm text-slate-100">{e.field}</span><StatusBadge status={e.severity} /></div>
-                <div className="mt-3 grid gap-2 md:grid-cols-2">
-                  <div><div className="vx-eyebrow mb-1">Approved</div><div className="break-all font-mono text-[11px] text-emerald-300">{e.expected}</div></div>
-                  <div><div className="vx-eyebrow mb-1">Observed</div><div className="break-all font-mono text-[11px] text-red-300">{e.observed}</div></div>
+              <div key={e.id} className="mb-3 min-w-0 rounded border border-red-500/25 bg-red-500/[0.04] p-4 last:mb-0">
+                <div className="flex flex-wrap items-center justify-between gap-2"><span className="break-all font-mono text-sm text-slate-100">{e.field}</span><StatusBadge status={e.severity} /></div>
+                <div className="mt-3 grid min-w-0 gap-2 md:grid-cols-2">
+                  <div className="min-w-0"><div className="vx-eyebrow mb-1">Approved</div><div className="break-all font-mono text-[11px] text-emerald-300">{String(e.expected ?? "—")}</div></div>
+                  <div className="min-w-0"><div className="vx-eyebrow mb-1">Observed</div><div className="break-all font-mono text-[11px] text-red-300">{String(e.observed ?? "—")}</div></div>
                 </div>
                 <div className="mt-3 text-xs text-slate-300">{e.why}</div>
-                <div className="mt-2 font-mono text-[10.5px] text-slate-500">{e.source} · {fmtTime(e.detected_at)} · expected-state v{e.expected_version} · seen {e.occurrences}×</div>
+                <div className="mt-2 break-words font-mono text-[10.5px] text-slate-500">{e.source} · {fmtTime(e.detected_at)} · expected-state v{e.expected_version} · seen {e.occurrences}×</div>
               </div>
             ))}
           </Panel>
           <Panel eyebrow="Deterministic · rule-based" title="Analysis & investigation steps" testId="incident-analysis">
             <div className="vx-eyebrow mb-2">Observed facts</div>
-            <ul className="mb-4 space-y-1.5 text-xs text-slate-300">{a.facts.map((f) => <li key={f} className="font-mono text-[11px]">• {f}</li>)}</ul>
+            <ul className="mb-4 space-y-1.5 text-xs text-slate-300">{a.facts.map((f) => <li key={f} className="break-words font-mono text-[11px]">• {f}</li>)}</ul>
             <div className="grid gap-4 md:grid-cols-2">
               <div><div className="vx-eyebrow mb-2">Still matching</div><div className="flex flex-wrap gap-1.5">{a.still_matching.map((f) => <StatusBadge key={f} status="MATCH" label={f} />)}</div></div>
               <div><div className="vx-eyebrow mb-2">Not verifiable</div><div className="flex flex-wrap gap-1.5">{a.not_verifiable.length ? a.not_verifiable.map((f) => <StatusBadge key={f} status="UNSUPPORTED" label={f} />) : <span className="text-xs text-slate-500">none</span>}</div></div>
@@ -80,7 +81,7 @@ export default function IncidentDetail() {
           </Panel>
           <AiPanel inc={inc} />
         </div>
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           {canWrite && inc.status !== "RESOLVED" && (
             <Panel title="Response" testId="incident-actions">
               <textarea data-testid="incident-note-input" rows={2} className={inputCls} placeholder="Note (optional)" value={note} onChange={(e) => setNote(e.target.value)} />
@@ -99,9 +100,10 @@ export default function IncidentDetail() {
             <KV k="Manifest"><Hash value={inc.release?.manifest_hash} /></KV>
             <KV k="Attestation">{inc.attestation ? <Hash value={inc.attestation.statement_hash} /> : "—"}</KV>
             <div className="vx-eyebrow mb-2 mt-4">Approved evidence</div>
+            {!inc.evidence.length && <div className="text-xs text-slate-500">No evidence linked.</div>}
             {inc.evidence.map((e) => (
-              <Link key={e.id} to={`/app/evidence/${e.id}`} data-testid={`incident-evidence-${e.type}`} className="flex items-center justify-between border-b border-white/[0.04] py-2 text-xs hover:text-emerald-300">
-                <span>{e.title}</span><StatusBadge status={e.integrity_status} />
+              <Link key={e.id} to={`/app/evidence/${e.id}`} data-testid={`incident-evidence-${e.type}`} className="flex items-center justify-between gap-2 border-b border-white/[0.04] py-2 text-xs hover:text-emerald-300">
+                <span className="min-w-0 break-words">{e.title}</span><StatusBadge status={e.integrity_status} />
               </Link>
             ))}
           </Panel>
@@ -110,8 +112,8 @@ export default function IncidentDetail() {
               {inc.timeline.map((t, i) => (
                 <li key={i} className="text-xs">
                   <span className="absolute -left-[5px] mt-1 h-2.5 w-2.5 rounded-full border border-white/20 bg-[#10141D]" />
-                  <div className="flex items-center gap-2"><StatusBadge status={t.type === "CREATED" ? "OPEN" : t.type} label={t.type} /><span className="font-mono text-[10.5px] text-slate-500">{fmtTime(t.at)}</span></div>
-                  <div className="mt-1 text-slate-300">{t.note || "—"}</div>
+                  <div className="flex flex-wrap items-center gap-2"><StatusBadge status={t.type === "CREATED" ? "OPEN" : t.type} label={t.type} /><span className="font-mono text-[10.5px] text-slate-500">{fmtTime(t.at)}</span></div>
+                  <div className="mt-1 break-words text-slate-300">{t.note || "—"}</div>
                   <div className="font-mono text-[10px] text-slate-500">{t.actor}</div>
                 </li>
               ))}

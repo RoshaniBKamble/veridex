@@ -42,9 +42,11 @@ function Sidebar({ onNavigate }) {
 function ProjectSwitcher() {
   const { projectId, setProjectId } = useAuth();
   const { data = [] } = useApi("projects", "/projects");
+  const current = data.find((p) => p.id === projectId);
   return (
     <Select value={projectId} onValueChange={setProjectId}>
-      <SelectTrigger data-testid="project-switcher" className="h-9 w-[240px] border-white/10 bg-[#0B0E14] font-mono text-xs">
+      <SelectTrigger data-testid="project-switcher" aria-label="Active project" title={current ? `${current.name}${current.is_demo ? " · DEMO" : ""}` : undefined}
+        className="h-9 w-[200px] min-w-0 border-white/10 bg-[#0B0E14] font-mono text-xs sm:w-[290px] [&>span]:truncate">
         <SelectValue placeholder="Select project" />
       </SelectTrigger>
       <SelectContent className="border-white/10 bg-[#10141D]">
@@ -74,7 +76,7 @@ export default function AppShell() {
       {open && (
         <div className="fixed inset-0 z-50 bg-black/70 lg:hidden" onClick={() => setOpen(false)}>
           <aside className="h-full w-64 overflow-y-auto border-r border-white/10 bg-[#0B0E14]" onClick={(e) => e.stopPropagation()}>
-            <div className="flex h-16 items-center justify-between px-5"><Logo /><button data-testid="mobile-nav-close" onClick={() => setOpen(false)}><X className="h-5 w-5" /></button></div>
+            <div className="flex h-16 items-center justify-between px-5"><Logo /><button data-testid="mobile-nav-close" aria-label="Close navigation" onClick={() => setOpen(false)} className="rounded p-1 text-slate-300 hover:text-white"><X className="h-5 w-5" /></button></div>
             <Sidebar onNavigate={() => setOpen(false)} />
           </aside>
         </div>
@@ -84,12 +86,12 @@ export default function AppShell() {
           <div className="flex h-16 items-center gap-3 px-4 sm:px-6">
             <button className="lg:hidden" data-testid="mobile-nav-open" onClick={() => setOpen(true)} aria-label="Open navigation"><Menu className="h-5 w-5" /></button>
             <ProjectSwitcher />
-            <button data-testid="topbar-incidents" onClick={() => nav("/app/incidents")}
-              className={cn("ml-auto hidden items-center gap-2 rounded border px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider sm:flex",
+            <button data-testid="topbar-incidents" onClick={() => nav("/app/incidents")} aria-label={`${openCount} open incidents`}
+              className={cn("ml-auto flex shrink-0 items-center gap-2 rounded border px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-wider sm:px-3",
                 openCount ? "border-red-500/40 text-red-300" : "border-white/10 text-slate-500")}>
-              <AlertOctagon className="h-3.5 w-3.5" /> {openCount} open incident{openCount === 1 ? "" : "s"}
+              <AlertOctagon className="h-3.5 w-3.5" /> {openCount}<span className="hidden sm:inline"> open incident{openCount === 1 ? "" : "s"}</span>
             </button>
-            <div className="ml-auto flex items-center gap-3 sm:ml-0">
+            <div className="flex items-center gap-3">
               <div className="hidden text-right md:block">
                 <div className="text-xs text-slate-200" data-testid="current-user-name">{user?.name}</div>
                 <div className="font-mono text-[10px] text-slate-500">{user?.email}</div>
@@ -102,8 +104,8 @@ export default function AppShell() {
           </div>
           <DriftBanner incidents={incidents} />
         </header>
-        <main className="vx-grid min-h-[calc(100vh-4rem)] px-4 py-8 sm:px-8 lg:px-10">
-          <div className="mx-auto max-w-[1400px]"><Outlet /></div>
+        <main className="vx-grid min-h-[calc(100vh-4rem)] overflow-x-clip px-4 py-8 sm:px-8 lg:px-10">
+          <div className="mx-auto min-w-0 max-w-[1400px]"><Outlet /></div>
         </main>
       </div>
     </div>

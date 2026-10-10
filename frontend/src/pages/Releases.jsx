@@ -1,7 +1,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useApi } from "@/lib/hooks";
 import { fmtTime } from "@/lib/api";
-import { Empty, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
+import { Empty, Hash, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
 import { Table, Td } from "@/components/vx/Controls";
 import { EntityLink } from "@/components/vx/Workflow";
 import { CreateReleaseForm } from "@/components/vx/CreateReleaseForm";
@@ -23,11 +23,11 @@ export default function Releases() {
               <tr key={r.id} className="vx-row">
                 <Td><EntityLink to={`/app/releases/${r.id}`} testId={`release-row-${r.version}`}>{r.version}</EntityLink></Td>
                 <Td><StatusBadge status={r.status} /></Td>
-                <Td className="font-mono text-[11px]">{r.commit.slice(0, 10)}</Td>
+                <Td className="font-mono text-[11px]" title={r.commit}>{r.commit.slice(0, 10)}</Td>
                 <Td className="text-xs">{r.branch}</Td>
                 <Td className="font-mono text-xs">{r.evidence_ids.length}</Td>
                 <Td className="font-mono text-xs">{r.approval_ids.length}</Td>
-                <Td className="font-mono text-[11px] text-emerald-300/80">{r.manifest_hash ? r.manifest_hash.slice(0, 20) + "…" : "—"}</Td>
+                <Td>{r.manifest_hash ? <Hash value={r.manifest_hash} /> : <span className="font-mono text-xs text-slate-500">—</span>}</Td>
                 <Td className="text-xs text-slate-500">{fmtTime(r.created_at)}</Td>
               </tr>
             ))}

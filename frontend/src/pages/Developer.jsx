@@ -4,7 +4,7 @@ import { Hash as HashIcon } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useApi } from "@/lib/hooks";
 import { apiError, ago, post } from "@/lib/api";
-import { Hash, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
+import { Empty, Hash, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
 import { Btn, Table, Td, inputCls } from "@/components/vx/Controls";
 
 function HashTool() {
@@ -36,24 +36,24 @@ function HashTool() {
 
 export default function Developer() {
   const { projectId } = useAuth();
-  const { data: deps, isLoading } = useApi(["deployments", projectId], `/projects/${projectId}/deployments`);
+  const { data: deps = [], isLoading } = useApi(["deployments", projectId], `/projects/${projectId}/deployments`);
   const { data: drift = [] } = useApi(["drift", projectId], `/projects/${projectId}/drift-events`);
   const { data: audit = [] } = useApi(["audit", projectId], `/projects/${projectId}/audit?limit=25`);
   return (
     <div data-testid="developer-page">
       <PageHeader eyebrow="Developer command center" title="Evidence, state and verification internals"
         description="Raw comparisons, hashes and observation sources behind every verdict." />
-      <div className="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
         <Panel eyebrow="Expected vs observed" title="Deployment comparisons" bodyClass="p-0">
-          {isLoading ? <div className="p-5"><Loading /></div> : (
+          {isLoading ? <div className="p-5"><Loading /></div> : !deps.length ? <div className="p-5"><Empty title="No deployments to compare">Register a deployment from an attested release to see field-by-field comparisons.</Empty></div> : (
             <Table head={["Deployment", "Field", "Status", "Observed", "Source"]} testId="dev-comparisons-table">
               {deps.flatMap((d) => d.comparisons.map((c) => (
                 <tr key={d.id + c.field} className="vx-row">
-                  <Td><Link to={`/app/deployments/${d.id}`} className="vx-link text-xs">{d.label.slice(0, 24)}</Link></Td>
+                  <Td><Link to={`/app/deployments/${d.id}`} className="vx-link text-xs" title={d.label}>{d.label.length > 24 ? `${d.label.slice(0, 24)}…` : d.label}</Link></Td>
                   <Td className="font-mono text-xs">{c.field}</Td>
                   <Td><StatusBadge status={c.status} /></Td>
-                  <Td className="max-w-[200px] truncate font-mono text-[11px]">{String(c.observed ?? "—")}</Td>
-                  <Td className="max-w-[220px] truncate font-mono text-[10.5px] text-slate-500">{c.source}</Td>
+                  <Td className="font-mono text-[11px]"><div className="min-w-[100px] max-w-[220px] break-all" title={String(c.observed ?? "")}>{String(c.observed ?? "—")}</div></Td>
+                  <Td className="font-mono text-[10.5px] text-slate-500"><div className="min-w-[120px] max-w-[220px] break-words" title={c.source}>{c.source}</div></Td>
                 </tr>
               )))}
             </Table>
@@ -63,24 +63,27 @@ export default function Developer() {
       </div>
       <div className="mt-6 grid gap-6 xl:grid-cols-2">
         <Panel eyebrow="Drift engine" title="Recent drift events" bodyClass="p-0">
-          <Table head={["Field", "Severity", "Status", "Detected"]} testId="dev-drift-table">
-            {drift.slice(0, 10).map((e) => (
-              <tr key={e.id} className="vx-row">
-                <Td className="font-mono text-xs">{e.field}{e.simulated && <StatusBadge status="SIMULATED" className="ml-2" />}</Td>
-                <Td><StatusBadge status={e.severity} /></Td><Td><StatusBadge status={e.status} /></Td>
-                <Td className="font-mono text-[11px] text-slate-500">{ago(e.detected_at)}</Td>
-              </tr>
-            ))}
-          </Table>
+          {drift.length > 0 && (
+            <Table head={["Field", "Severity", "Status", "Detected"]} testId="dev-drift-table">
+              {drift.slice(0, 10).map((e) => (
+                <tr key={e.id} className="vx-row">
+                  <Td className="font-mono text-xs">{e.field}{e.simulated && <StatusBadge status="SIMULATED" className="ml-2" />}</Td>
+                  <Td><StatusBadge status={e.severity} /></Td><Td><StatusBadge status={e.status} /></Td>
+                  <Td className="font-mono text-[11px] text-slate-500">{ago(e.detected_at)}</Td>
+                </tr>
+              ))}
+            </Table>
+          )}
           {!drift.length && <div className="p-5 text-xs text-slate-500">No drift recorded. Use the Demo environment to simulate a controlled change.</div>}
         </Panel>
         <Panel eyebrow="Audit history" title="Activity log" bodyClass="p-0">
           <div className="max-h-[380px] overflow-y-auto" data-testid="audit-log">
+            {!audit.length && <div className="p-5 text-xs text-slate-500">No activity recorded yet for this project.</div>}
             {audit.map((a) => (
               <div key={a.id} className="flex items-center gap-3 border-b border-white/[0.04] px-5 py-2.5 text-xs">
                 <span className="w-16 shrink-0 font-mono text-[10.5px] text-slate-500">{ago(a.created_at)}</span>
-                <span className="font-mono text-emerald-300/80">{a.action}</span>
-                <span className="truncate text-slate-500">{a.actor}</span>
+                <span className="min-w-0 break-all font-mono text-emerald-300/80">{a.action}</span>
+                <span className="min-w-0 truncate text-slate-500" title={a.actor}>{a.actor}</span>
               </div>
             ))}
           </div>

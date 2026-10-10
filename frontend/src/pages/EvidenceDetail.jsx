@@ -24,8 +24,8 @@ export default function EvidenceDetail() {
     <div data-testid="evidence-detail-page">
       <PageHeader eyebrow={`Evidence · ${e.type}`} title={e.title}
         actions={<><StatusBadge status={e.label} /><StatusBadge status={e.integrity_status} testId="evidence-integrity-badge" /></>} />
-      <div className="grid gap-6 xl:grid-cols-[1fr_420px]">
-        <div className="space-y-6">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_420px]">
+        <div className="min-w-0 space-y-6">
           <Panel eyebrow={e.canonicalization} title="Canonical form (exact hashed bytes)">
             <pre data-testid="evidence-canonical" className="max-h-80 overflow-auto whitespace-pre-wrap break-all rounded border border-white/[0.06] bg-[#0B0E14] p-4 font-mono text-[11px] text-slate-300">{e.canonical_form}</pre>
             <div className="mt-2 font-mono text-[10.5px] text-slate-500">{e.canonical_size} bytes recorded at creation</div>
@@ -35,17 +35,17 @@ export default function EvidenceDetail() {
             <div className="mt-3 flex flex-wrap items-center gap-3">
               <Btn icon={ScanSearch} onClick={verifyContent} loading={busy === "vc"} data-testid="verify-content-btn">Compare hash</Btn>
               {cmp?.error && <span className="text-xs text-red-300">{cmp.error}</span>}
-              {cmp && !cmp.error && <span data-testid="verify-content-result"><StatusBadge status={cmp.match ? "MATCH" : "MISMATCH"} /> <span className="ml-2 font-mono text-[11px] text-slate-400">{cmp.submitted_hash}</span></span>}
+              {cmp && !cmp.error && <span data-testid="verify-content-result" className="flex min-w-0 flex-wrap items-center gap-2"><StatusBadge status={cmp.match ? "MATCH" : "MISMATCH"} /><span className="break-all font-mono text-[11px] text-slate-400">{cmp.submitted_hash}</span></span>}
             </div>
           </Panel>
         </div>
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <Panel title="Integrity">
             <KV k="Recorded hash"><Hash value={e.hash} short={false} testId="evidence-hash" /></KV>
             <KV k="Last recomputed">{e.last_recomputed_hash ? <Hash value={e.last_recomputed_hash} /> : "—"}</KV>
             <KV k="Last verified">{fmtTime(e.last_verified_at)}</KV>
             <KV k="Release"><Link className="vx-link" to={`/app/releases/${e.release_id}`}>{e.release?.version}</Link></KV>
-            <KV k="Source URI">{e.source_uri || "—"}</KV>
+            <KV k="Source URI"><span className="break-all">{e.source_uri || "—"}</span></KV>
             <KV k="Added by">{e.created_by}</KV>
             <div className="mt-4 flex flex-wrap gap-2">
               <Btn variant="primary" icon={RefreshCcw} loading={busy === "v"} data-testid="verify-evidence-btn" onClick={async () => setCheck(await run("v", () => post(`/evidence/${id}/verify`), (r) => `Integrity ${r.status}`))}>Recompute hash</Btn>

@@ -1,0 +1,1184 @@
+{
+ "laptop:landing": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/api/projects",
+   "//release-trust.preview.emergentagent.com/api/projects/prj_demo_aurora/incidents",
+   "eact_dist_esm_icons_info_js-node_modules_radix-ui_react-tooltip_-59a1b5.chunk.js",
+   "release-trust.preview.emergentagent.com/static/js/src_pages_Founder_jsx.chunk.js",
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:auth": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:founder": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:developer": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:projects": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:project-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:releases": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:release-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:evidence-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [
+   {
+    "ellipsis": true,
+    "tid": null,
+    "cls": "truncate break-all",
+    "text": "sha256:df68fe3d9db20de23426d91948fc02198",
+    "title": "has-title"
+   }
+  ],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:deployments": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:deployment-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [
+   {
+    "ellipsis": true,
+    "tid": null,
+    "cls": "truncate break-all",
+    "text": "sha256:5d3abf1a5\u20262addfa1c",
+    "title": "has-title"
+   },
+   {
+    "ellipsis": true,
+    "tid": null,
+    "cls": "truncate break-all",
+    "text": "sha256:276c5a51a\u202607cfc2ee",
+    "title": "has-title"
+   }
+  ],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:integrations": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:permissions": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 1433,
+    "text": "DEPLOYMENT\tAUTHORITY\tOBSERVED\tPREVIOUS\tE"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 1433,
+    "text": "DEPLOYMENT\tAUTHORITY\tOBSERVED\tPREVIOUS\tE"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 1433,
+    "text": "DEPLOYMENT\tAUTHORITY\tOBSERVED\tPREVIOUS\tE"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1313,
+    "text": "REVIEW"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1433,
+    "text": "OBSERVED AT"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 1433,
+    "text": "AuroraVault proxy (DEMO)\tproxy_admin\t\n0x"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 1433,
+    "text": "AuroraVault proxy (DEMO)\tproxy_admin\t\n0x"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top text-slate-300",
+    "right": 1313,
+    "text": "RESOLVED DEMO RESET"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:findings": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 1319,
+    "text": "SEVERITY\tFINDING\tRULE\tEVIDENCE\tRECOMMEND"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 1319,
+    "text": "SEVERITY\tFINDING\tRULE\tEVIDENCE\tRECOMMEND"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 1319,
+    "text": "SEVERITY\tFINDING\tRULE\tEVIDENCE\tRECOMMEND"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1319,
+    "text": ""
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 1319,
+    "text": "LOW\t\nProduction observation is stale for"
+   },
+   {
+    "tag": "TR",
+    "tid": "finding-row-STALE_OBSERVATION",
+    "cls": "vx-row",
+    "right": 1319,
+    "text": "LOW\t\nProduction observation is stale for"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top text-slate-300",
+    "right": 1319,
+    "text": "Acknowledge"
+   },
+   {
+    "tag": "BUTTON",
+    "tid": "ack-finding-fnd_ab2043108c4d",
+    "cls": "inline-flex items-center justify-center gap-2 rounded-md border px-3.5 py-2 text",
+    "right": 1307,
+    "text": "Acknowledge"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:drift": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:incidents": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:incident-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [
+   {
+    "ellipsis": true,
+    "tid": null,
+    "cls": "truncate break-all",
+    "text": "sha256:5d3abf1a5\u20262addfa1c",
+    "title": "has-title"
+   },
+   {
+    "ellipsis": true,
+    "tid": null,
+    "cls": "truncate break-all",
+    "text": "sha256:276c5a51a\u202607cfc2ee",
+    "title": "has-title"
+   }
+  ],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:graph": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:settings": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [
+   {
+    "ellipsis": true,
+    "tid": null,
+    "cls": "truncate break-all",
+    "text": "07efbb23538d456942e70a770cdbfd7016c65e86",
+    "title": "has-title"
+   }
+  ],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "laptop:demo": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 1632,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 1632,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 1632,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1283,
+    "text": "OBSERVED"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1371,
+    "text": "STATUS"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1450,
+    "text": "SEVERITY"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1632,
+    "text": "SOURCE / LIMITATION"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 1632,
+    "text": "chain_id\n\t\n1337\n\t\n1337\n\t\nMATCH\t\u2014\t\nsimula"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:landing": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:auth": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:founder": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:developer": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 778,
+    "text": "DEPLOYMENT\tFIELD\tSTATUS\tOBSERVED\tSOURCE\n"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 778,
+    "text": "DEPLOYMENT\tFIELD\tSTATUS\tOBSERVED\tSOURCE\n"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 778,
+    "text": "DEPLOYMENT\tFIELD\tSTATUS\tOBSERVED\tSOURCE"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 778,
+    "text": "SOURCE"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 778,
+    "text": "AuroraVault proxy (DEMO)\tchain_id\t\nMATCH"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 778,
+    "text": "AuroraVault proxy (DEMO)\tchain_id\t\nMATCH"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top font-mono text-[10.5px] text-slate-500",
+    "right": 778,
+    "text": "simulated state store @ demo block 1022"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 778,
+    "text": "AuroraVault proxy (DEMO)\tcode_hash\t\nMATC"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:projects": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:project-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:releases": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 839,
+    "text": "VERSION\tSTATUS\tCOMMIT\tBRANCH\tEVIDENCE\tAP"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 839,
+    "text": "VERSION\tSTATUS\tCOMMIT\tBRANCH\tEVIDENCE\tAP"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 839,
+    "text": "VERSION\tSTATUS\tCOMMIT\tBRANCH\tEVIDENCE\tAP"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 839,
+    "text": "CREATED"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 839,
+    "text": "ref-2026.06\t\nATTESTED\t0000000000\tmain\t4\t"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 839,
+    "text": "ref-2026.06\t\nATTESTED\t0000000000\tmain\t4\t"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top text-xs text-slate-500",
+    "right": 839,
+    "text": "Oct 10, 2026, 6:52:28 PM"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 839,
+    "text": "v2.4.0\t\nATTESTED\t7f2a1c9e3b\tmain\t5\t2\t\nsh"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:release-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:evidence-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [
+   {
+    "ellipsis": true,
+    "tid": null,
+    "cls": "truncate break-all",
+    "text": "sha256:df68fe3d9db20de23426d91948fc02198",
+    "title": "has-title"
+   }
+  ],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:deployments": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 892,
+    "text": "DEPLOYMENT\tNETWORK\tRELEASE\tVERIFICATION\t"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 892,
+    "text": "DEPLOYMENT\tNETWORK\tRELEASE\tVERIFICATION\t"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 892,
+    "text": "DEPLOYMENT\tNETWORK\tRELEASE\tVERIFICATION\t"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 786,
+    "text": "LAST OBSERVED"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 892,
+    "text": "BLOCK / SLOT"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 892,
+    "text": "AuroraVault proxy (DEMO)\n0x7a25d1c0ffee4"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 892,
+    "text": "AuroraVault proxy (DEMO)\n0x7a25d1c0ffee4"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top font-mono text-[11px] text-slate-500",
+    "right": 786,
+    "text": "32m ago"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:deployment-detail": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 1000,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 1000,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 1000,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 818,
+    "text": "SEVERITY"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1000,
+    "text": "SOURCE / LIMITATION"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 1000,
+    "text": "chain_id\n\t\n1337\n\t\n1337\n\t\nMATCH\t\u2014\t\nsimula"
+   },
+   {
+    "tag": "TR",
+    "tid": "comparison-row-chain_id",
+    "cls": "vx-row",
+    "right": 1000,
+    "text": "chain_id\n\t\n1337\n\t\n1337\n\t\nMATCH\t\u2014\t\nsimula"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top text-slate-300",
+    "right": 818,
+    "text": "\u2014"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:integrations": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:permissions": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 1185,
+    "text": "DEPLOYMENT\tAUTHORITY\tOBSERVED\tPREVIOUS\tE"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 1185,
+    "text": "DEPLOYMENT\tAUTHORITY\tOBSERVED\tPREVIOUS\tE"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 1185,
+    "text": "DEPLOYMENT\tAUTHORITY\tOBSERVED\tPREVIOUS\tE"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 881,
+    "text": "VERIFICATION"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1065,
+    "text": "REVIEW"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1185,
+    "text": "OBSERVED AT"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 1185,
+    "text": "AuroraVault proxy (DEMO)\tproxy_admin\t\n0x"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 1185,
+    "text": "AuroraVault proxy (DEMO)\tproxy_admin\t\n0x"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:findings": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 1071,
+    "text": "SEVERITY\tFINDING\tRULE\tEVIDENCE\tRECOMMEND"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 1071,
+    "text": "SEVERITY\tFINDING\tRULE\tEVIDENCE\tRECOMMEND"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 1071,
+    "text": "SEVERITY\tFINDING\tRULE\tEVIDENCE\tRECOMMEND"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 855,
+    "text": "RECOMMENDED ACTION"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 936,
+    "text": "STATUS"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1071,
+    "text": ""
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 1071,
+    "text": "LOW\t\nProduction observation is stale for"
+   },
+   {
+    "tag": "TR",
+    "tid": "finding-row-STALE_OBSERVATION",
+    "cls": "vx-row",
+    "right": 1071,
+    "text": "LOW\t\nProduction observation is stale for"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:drift": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 957,
+    "text": "DETECTED\tFIELD\tEXPECTED\tOBSERVED\tSEVERIT"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 957,
+    "text": "DETECTED\tFIELD\tEXPECTED\tOBSERVED\tSEVERIT"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 957,
+    "text": "DETECTED\tFIELD\tEXPECTED\tOBSERVED\tSEVERIT"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 865,
+    "text": "STATUS"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 957,
+    "text": "DEPLOYMENT"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 957,
+    "text": "Oct 10, 2026, 7:19:04 PM\tproxy_admin\nSIM"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 957,
+    "text": "Oct 10, 2026, 7:19:04 PM\tproxy_admin\nSIM"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top text-slate-300",
+    "right": 865,
+    "text": "RESOLVED"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:incidents": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 822,
+    "text": "INCIDENT\tSEVERITY\tSTATUS\tTITLE\tDRIFT EVE"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 822,
+    "text": "INCIDENT\tSEVERITY\tSTATUS\tTITLE\tDRIFT EVE"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 822,
+    "text": "INCIDENT\tSEVERITY\tSTATUS\tTITLE\tDRIFT EVE"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 822,
+    "text": "UPDATED"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 822,
+    "text": "INC-1009\nSIMULATED\t\nCRITICAL\t\nRESOLVED\t\n"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 822,
+    "text": "INC-1009\nSIMULATED\t\nCRITICAL\t\nRESOLVED\t\n"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top text-xs text-slate-500",
+    "right": 822,
+    "text": "Oct 10, 2026, 7:19:13 PM"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "vx-row",
+    "right": 822,
+    "text": "INC-1008\nSIMULATED\t\nCRITICAL\t\nRESOLVED\t\n"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:incident-detail": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:graph": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:settings": {
+  "hOverflow": 0,
+  "offscreen": [],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ },
+ "tablet:demo": {
+  "hOverflow": 0,
+  "offscreen": [
+   {
+    "tag": "TABLE",
+    "tid": null,
+    "cls": "w-full text-left text-sm",
+    "right": 1000,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "THEAD",
+    "tid": null,
+    "cls": "",
+    "right": 1000,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "TR",
+    "tid": null,
+    "cls": "border-b border-white/[0.07]",
+    "right": 1000,
+    "text": "FIELD\tEXPECTED\tOBSERVED\tSTATUS\tSEVERITY\t"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 818,
+    "text": "SEVERITY"
+   },
+   {
+    "tag": "TH",
+    "tid": null,
+    "cls": "whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase trac",
+    "right": 1000,
+    "text": "SOURCE / LIMITATION"
+   },
+   {
+    "tag": "TBODY",
+    "tid": null,
+    "cls": "divide-y divide-white/[0.05]",
+    "right": 1000,
+    "text": "chain_id\n\t\n1337\n\t\n1337\n\t\nMATCH\t\u2014\t\nsimula"
+   },
+   {
+    "tag": "TR",
+    "tid": "comparison-row-chain_id",
+    "cls": "vx-row",
+    "right": 1000,
+    "text": "chain_id\n\t\n1337\n\t\n1337\n\t\nMATCH\t\u2014\t\nsimula"
+   },
+   {
+    "tag": "TD",
+    "tid": null,
+    "cls": "px-3 py-3 align-top text-slate-300",
+    "right": 818,
+    "text": "\u2014"
+   }
+  ],
+  "clipped": [],
+  "tiny": [],
+  "blank": false,
+  "errors": [],
+  "failed": [
+   "https://release-trust.preview.emergentagent.com/__emergent_overlay__/report"
+  ]
+ }
+}

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { BadgeCheck, FileLock2, Plus, ShieldCheck, Stamp, XCircle } from "lucide-react";
 import { useAction, useApi } from "@/lib/hooks";
 import { fmtTime, get, post } from "@/lib/api";
-import { ErrorNote, Hash, KV, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
+import { Empty, ErrorNote, Hash, KV, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
 import { Btn, Field, Table, Td, inputCls } from "@/components/vx/Controls";
 import { WorkflowStepper } from "@/components/vx/Workflow";
 import { RegisterDeployment } from "@/components/vx/RegisterDeployment";
@@ -92,12 +92,14 @@ export default function ReleaseDetail() {
       <PageHeader eyebrow={`${r.project.name} · release`} title={r.version} description={r.notes}
         actions={<>{r.project.is_demo && <StatusBadge status="DEMO" />}<StatusBadge status={r.status} testId="release-status-badge" /></>} />
       <div className="mb-6"><WorkflowStepper release={r} deployments={r.deployments} /></div>
-      <div className="grid gap-6 xl:grid-cols-[1fr_400px]">
-        <div className="space-y-6">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_400px]">
+        <div className="min-w-0 space-y-6">
           <Panel eyebrow="Evidence" title={`Evidence (${r.evidence.length})`} bodyClass="p-0"
             action={r.status === "draft" && canWrite && (
               <Btn variant="primary" icon={FileLock2} loading={busy === "seal"} data-testid="seal-release-btn" disabled={missing.length > 0}
                 onClick={() => run("seal", () => post(`/releases/${id}/seal`), (x) => `Sealed · manifest ${x.manifest_hash.slice(0, 18)}…`)}>Seal manifest</Btn>)}>
+            {!r.evidence.length && <div className="p-5"><Empty title="No evidence yet" testId="evidence-empty">Add evidence below. Each record is canonicalized and SHA-256 hashed on submission.</Empty></div>}
+            {r.evidence.length > 0 && (
             <Table head={["Type", "Title", "SHA-256", "Integrity", "Label"]} testId="evidence-table">
               {r.evidence.map((e) => (
                 <tr key={e.id} className="vx-row">
@@ -109,33 +111,38 @@ export default function ReleaseDetail() {
                 </tr>
               ))}
             </Table>
+            )}
             {missing.length > 0 && <div className="border-t border-white/[0.06] px-5 py-3 text-xs text-amber-300" data-testid="missing-evidence-note">Required before sealing: {missing.join(", ")}</div>}
           </Panel>
           {r.status === "draft" && canWrite && <Panel eyebrow="Collect" title="Add evidence"><AddEvidence release={r} /></Panel>}
           <Panel eyebrow="Production" title="Deployments of this release" bodyClass="p-0">
+            {!r.deployments.length && <div className="p-5 text-xs text-slate-500" data-testid="deployments-empty">{r.status === "attested" ? "No deployments registered yet for this release." : "Deployments can be registered once the release is attested."}</div>}
+            {r.deployments.length > 0 && (
             <Table head={["Label", "Network", "Address", "Status"]}>
               {r.deployments.map((d) => (
                 <tr key={d.id} className="vx-row">
                   <Td><Link className="vx-link text-xs" to={`/app/deployments/${d.id}`}>{d.label}</Link></Td>
-                  <Td className="text-xs">{d.network}</Td><Td className="font-mono text-[11px]">{d.address.slice(0, 18)}…</Td>
+                  <Td className="text-xs">{d.network}</Td><Td className="font-mono text-[11px]" title={d.address}>{d.address.length > 18 ? `${d.address.slice(0, 18)}…` : d.address}</Td>
                   <Td><StatusBadge status={d.verification_status || "NEVER"} /></Td>
                 </tr>
               ))}
             </Table>
+            )}
             {canWrite && <div className="border-t border-white/[0.06] p-5"><RegisterDeployment release={r} /></div>}
           </Panel>
         </div>
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <Panel title="Manifest">
-            <KV k="Commit"><span className="font-mono text-xs">{r.commit}</span></KV>
+            <KV k="Commit"><span className="break-all font-mono text-xs">{r.commit}</span></KV>
             <KV k="Branch">{r.branch}</KV>
             <KV k="Manifest hash">{r.manifest_hash ? <Hash value={r.manifest_hash} testId="manifest-hash" /> : "Not sealed"}</KV>
             <KV k="Sealed">{fmtTime(r.sealed_at)}</KV>
           </Panel>
           <Panel eyebrow={`${approvesCount} / ${r.project.required_approvals} required`} title="Approvals" testId="approvals-panel">
+            {!r.approvals.length && r.status !== "sealed" && r.status !== "draft" && <div className="text-xs text-slate-500">No approvals recorded.</div>}
             {r.approvals.map((a) => (
               <div key={a.id} className="mb-3 rounded border border-white/[0.06] p-3 text-xs">
-                <div className="flex items-center justify-between"><span className="text-slate-200">{a.approver_name}</span><StatusBadge status={a.decision} /></div>
+                <div className="flex flex-wrap items-center justify-between gap-2"><span className="text-slate-200">{a.approver_name}</span><StatusBadge status={a.decision} /></div>
                 <div className="mt-1 text-slate-500">{a.comment || "—"} · {fmtTime(a.created_at)}</div>
                 <div className="mt-1.5"><Hash value={a.manifest_hash} /></div>
               </div>
@@ -152,6 +159,7 @@ export default function ReleaseDetail() {
             {r.status === "approved" && canApprove && (
               <Btn variant="primary" icon={Stamp} className="w-full" loading={busy === "at"} data-testid="attest-release-btn" onClick={() => run("at", () => post(`/releases/${id}/attest`), "Attestation signed (Ed25519, offchain)")}>Issue attestation</Btn>
             )}
+            {r.status === "sealed" && !canApprove && <div className="text-xs text-slate-500">Awaiting review by an owner or approver.</div>}
             {r.status === "draft" && <div className="text-xs text-slate-500">Seal the manifest to open reviews.</div>}
           </Panel>
           {r.attestation && <Attestation att={r.attestation} />}

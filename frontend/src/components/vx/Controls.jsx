@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,21 +21,39 @@ export function Btn({ variant = "outline", loading, icon: Icon, children, classN
 }
 
 export function Table({ head, children, testId }) {
+  const ref = useRef(null);
+  const [scroll, setScroll] = useState({ can: false, atEnd: false });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => setScroll({ can: el.scrollWidth > el.clientWidth + 2, atEnd: el.scrollLeft + el.clientWidth >= el.scrollWidth - 2 });
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    el.addEventListener("scroll", measure, { passive: true });
+    return () => { ro.disconnect(); el.removeEventListener("scroll", measure); };
+  }, [children]);
   return (
-    <div className="overflow-x-auto" data-testid={testId}>
-      <table className="w-full text-left text-sm">
-        <thead>
-          <tr className="border-b border-white/[0.07]">
-            {head.map((h) => <th key={h} className="whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase tracking-wider text-slate-500">{h}</th>)}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-white/[0.05]">{children}</tbody>
-      </table>
+    <div className="relative">
+      <div ref={ref} className="overflow-x-auto" data-testid={testId} data-scrollable={scroll.can || undefined}>
+        <table className="w-full text-left text-sm">
+          <thead>
+            <tr className="border-b border-white/[0.07]">
+              {head.map((h, i) => <th key={h || i} className="whitespace-nowrap px-3 py-2.5 font-mono text-[10.5px] font-medium uppercase tracking-wider text-slate-500">{h}</th>)}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-white/[0.05]">{children}</tbody>
+        </table>
+      </div>
+      {scroll.can && !scroll.atEnd && (
+        <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#10141D] to-transparent" />
+      )}
+      {scroll.can && <div className="px-3 py-1.5 font-mono text-[10px] text-slate-600" data-testid="table-scroll-hint">Scroll horizontally for more columns →</div>}
     </div>
   );
 }
 
-export const Td = ({ children, className, ...r }) => <td {...r} className={cn("px-3 py-3 align-top text-slate-300", className)}>{children}</td>;
+export const Td = ({ children, className, ...r }) => <td {...r} className={cn("px-2.5 py-3 align-top text-slate-300", className)}>{children}</td>;
 
 export function Field({ label, children, hint }) {
   return (

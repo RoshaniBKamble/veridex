@@ -51,16 +51,16 @@ export default function Founder() {
         <Stat label="Open findings" value={data.open_findings} tone={f.CRITICAL ? "crit" : data.open_findings ? "warn" : "ok"} testId="stat-open-findings" sub={Object.entries(f).map(([k, v]) => `${v} ${k.toLowerCase()}`).join(" · ") || "none"} />
         <Stat label="Verification freshness" value={`${data.freshness.FRESH}/${data.deployments.length}`} tone={data.freshness.STALE || data.freshness.NEVER ? "warn" : "ok"} testId="stat-freshness" sub="Deployments observed within window" />
       </div>
-      <div className="mt-6 grid gap-6 xl:grid-cols-[380px_1fr]">
+      <div className="mt-6 grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
         <TrustScore trust={data.trust} />
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <Panel eyebrow="What to do next" title="Recommended actions" testId="recommended-actions">
             {data.recommended_actions.length ? (
               <ul className="divide-y divide-white/[0.05]">
                 {data.recommended_actions.map((a, i) => (
                   <li key={i} className="flex items-center gap-3 py-2.5">
                     <StatusBadge status={a.priority} />
-                    <Link to={a.link} className="flex-1 text-sm text-slate-200 hover:text-emerald-300">{a.text}</Link>
+                    <Link to={a.link} data-testid={`recommended-action-${i}`} className="min-w-0 flex-1 break-words text-sm text-slate-200 hover:text-emerald-300">{a.text}</Link>
                     <ArrowRight className="h-3.5 w-3.5 text-slate-600" />
                   </li>
                 ))}
@@ -69,25 +69,27 @@ export default function Founder() {
           </Panel>
           <Panel eyebrow="Production" title="Deployment health" testId="deployment-health">
             <div className="grid gap-3 md:grid-cols-2">
+              {!data.deployments.length && <div className="md:col-span-2"><Empty title="No deployments registered">Register a deployment from an attested release to start verification.</Empty></div>}
               {data.deployments.map((d) => (
                 <Link key={d.id} to={`/app/deployments/${d.id}`} data-testid={`founder-deployment-${d.id}`}
-                  className={cn("rounded-md border p-4 transition-colors duration-150 hover:bg-white/[0.02]", d.verification_status === "DRIFT" ? "border-red-500/40" : "border-white/[0.07]")}>
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="text-sm text-slate-100">{d.label}</div>
+                  className={cn("min-w-0 rounded-md border p-4 transition-colors duration-150 hover:bg-white/[0.02]", d.verification_status === "DRIFT" ? "border-red-500/40" : "border-white/[0.07]")}>
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div className="min-w-0 break-words text-sm text-slate-100">{d.label}</div>
                     <StatusBadge status={d.verification_status || "NEVER"} pulse={d.verification_status === "DRIFT"} />
                   </div>
                   <div className="mt-2 flex flex-wrap gap-2 font-mono text-[10.5px] text-slate-500">
                     <span>{d.network_name}</span><span>· release {d.release_version}</span><span>· {ago(d.last_observed_at)}</span>
                   </div>
-                  <div className="mt-2 flex gap-2"><StatusBadge status={d.observation_mode || "UNKNOWN"} /><StatusBadge status={d.freshness} /></div>
+                  <div className="mt-2 flex flex-wrap gap-2"><StatusBadge status={d.observation_mode || "UNKNOWN"} /><StatusBadge status={d.freshness} /></div>
                 </Link>
               ))}
             </div>
           </Panel>
           <Panel eyebrow="Releases" title="Recent releases">
             <div className="flex flex-wrap gap-3">
+              {!data.recent_releases.length && <Empty title="No releases yet">Create a release from the project page.</Empty>}
               {data.recent_releases.map((r) => (
-                <Link key={r.id} to={`/app/releases/${r.id}`} className="rounded-md border border-white/[0.07] px-4 py-3 transition-colors duration-150 hover:border-white/20">
+                <Link key={r.id} to={`/app/releases/${r.id}`} data-testid={`founder-release-${r.id}`} className="rounded-md border border-white/[0.07] px-4 py-3 transition-colors duration-150 hover:border-white/20">
                   <div className="font-mono text-sm text-slate-100">{r.version}</div>
                   <div className="mt-1.5"><StatusBadge status={r.status} /></div>
                 </Link>

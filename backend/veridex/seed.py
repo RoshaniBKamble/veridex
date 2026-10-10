@@ -3,7 +3,7 @@ import logging
 
 from eth_hash.auto import keccak
 
-from .core import DEMO_PROJECT_ID, audit, db, now
+from .core import DEMO_PROJECT_ID, audit, db, new_id, now
 from .drift import verify_deployment
 from .findings import refresh_findings
 from . import workflow as wf
@@ -119,6 +119,7 @@ async def seed_demo(force=False):
                         "created_by": users[0]["email"], "created_at": now()},
            "created_by": users[0]["email"], "created_at": now()}
     await db.deployments.insert_one(dep)
+    await db.expected_states.insert_one({"_id": new_id("exp"), "deployment_id": dep_placeholder, **dep["expected"]})
     await verify_deployment(dep, "seed")
     na = "Not applicable: third-party public program; VERIDEX holds no source or build for it"
     ref = await _attested_release(project, users, "ref-2026.06", "0" * 40, [

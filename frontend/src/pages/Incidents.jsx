@@ -20,7 +20,7 @@ export default function Incidents() {
                 <Td><EntityLink to={`/app/incidents/${i.id}`} testId={`incident-link-${i.number}`}>{i.number}</EntityLink>{i.simulated && <StatusBadge status="SIMULATED" className="ml-2" />}</Td>
                 <Td><StatusBadge status={i.severity} /></Td>
                 <Td><StatusBadge status={i.status} pulse={i.status === "OPEN"} /></Td>
-                <Td className="max-w-[320px] text-xs text-slate-200">{i.title}</Td>
+                <Td className="text-xs text-slate-200"><div className="min-w-[180px] max-w-[360px]">{i.title}</div></Td>
                 <Td className="font-mono text-xs">{i.drift_event_ids.length}</Td>
                 <Td className="text-xs text-slate-500">{fmtTime(i.created_at)}</Td>
                 <Td className="text-xs text-slate-500">{fmtTime(i.updated_at)}</Td>

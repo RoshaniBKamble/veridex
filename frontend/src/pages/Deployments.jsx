@@ -17,7 +17,7 @@ export default function Deployments() {
           <Table head={["Deployment", "Network", "Release", "Verification", "Mode", "Freshness", "Last observed", "Block / slot"]} testId="deployments-table">
             {data.map((d) => (
               <tr key={d.id} className="vx-row">
-                <Td><EntityLink to={`/app/deployments/${d.id}`} testId={`deployment-link-${d.id}`}>{d.label}</EntityLink><div className="mt-1 font-mono text-[10.5px] text-slate-500">{d.address.slice(0, 22)}…</div></Td>
+                <Td><EntityLink to={`/app/deployments/${d.id}`} testId={`deployment-link-${d.id}`}>{d.label}</EntityLink><div className="mt-1 font-mono text-[10.5px] text-slate-500" title={d.address}>{d.address.length > 22 ? `${d.address.slice(0, 22)}…` : d.address}</div></Td>
                 <Td className="text-xs">{d.network_name}</Td>
                 <Td className="font-mono text-xs">{d.release_version}</Td>
                 <Td><StatusBadge status={d.verification_status || "NEVER"} pulse={d.verification_status === "DRIFT"} /></Td>

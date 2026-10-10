@@ -24,9 +24,10 @@ export function layout3d(nodes) {
   nodes.forEach((n) => (byLayer[n.layer] = byLayer[n.layer] || []).push(n));
   const pos = {};
   Object.entries(byLayer).forEach(([layer, list]) => {
+    const spacing = Math.min(1.25, 8 / Math.max(1, list.length - 1));
     list.forEach((n, i) => {
       const off = i - (list.length - 1) / 2;
-      pos[n.id] = [(Number(layer) - 6) * 2.3, off * 1.25, (i % 2 ? 1 : -1) * Math.min(1.4, list.length * 0.12)];
+      pos[n.id] = [(Number(layer) - 6) * 2.0, off * spacing, (i % 2 ? 1 : -1) * Math.min(1.4, list.length * 0.12)];
     });
   });
   return pos;

@@ -14,12 +14,12 @@ export function ComparisonTable({ rows }) {
     <Table head={["Field", "Expected", "Observed", "Status", "Severity", "Source / limitation"]} testId="comparison-table">
       {rows.map((c) => (
         <tr key={c.field} className={cn("vx-row", c.status === "MISMATCH" && "bg-red-500/[0.05]")} data-testid={`comparison-row-${c.field}`}>
-          <Td className="font-mono text-xs text-slate-200">{c.field}</Td>
-          <Td className="max-w-[220px]">{isHash(c.expected) ? <Hash value={c.expected} /> : <span className="break-all font-mono text-[11px]">{val(c.expected)}</span>}</Td>
-          <Td className="max-w-[220px]">{isHash(c.observed) ? <Hash value={c.observed} className={c.status === "MISMATCH" ? "border-red-500/40 bg-red-950/30 text-red-300" : ""} /> : <span className={cn("break-all font-mono text-[11px]", c.status === "MISMATCH" && "text-red-300")}>{val(c.observed)}</span>}</Td>
+          <Td className="font-mono text-xs text-slate-200"><div className="min-w-[130px] [overflow-wrap:anywhere]">{c.field}</div></Td>
+          <Td><div className="min-w-[110px] max-w-[220px]">{isHash(c.expected) ? <Hash value={c.expected} /> : <span className="break-all font-mono text-[11px]">{val(c.expected)}</span>}</div></Td>
+          <Td><div className="min-w-[110px] max-w-[220px]">{isHash(c.observed) ? <Hash value={c.observed} className={c.status === "MISMATCH" ? "border-red-500/40 bg-red-950/30 text-red-300" : ""} /> : <span className={cn("break-all font-mono text-[11px]", c.status === "MISMATCH" && "text-red-300")}>{val(c.observed)}</span>}</div></Td>
           <Td><StatusBadge status={c.status} /></Td>
           <Td>{c.status === "MISMATCH" ? <StatusBadge status={c.severity} /> : <span className="text-xs text-slate-600">—</span>}</Td>
-          <Td className="max-w-[260px] text-[11px] text-slate-500"><div className="font-mono">{c.source || "—"}</div>{c.limitation && <div className="mt-1 text-amber-300/80">{c.limitation}</div>}{c.status === "MISMATCH" && <div className="mt-1 text-slate-400">{c.why}</div>}</Td>
+          <Td className="text-[11px] text-slate-500"><div className="min-w-[140px] max-w-[260px]"><div className="break-words font-mono">{c.source || "—"}</div>{c.limitation && <div className="mt-1 text-amber-300/80">{c.limitation}</div>}{c.status === "MISMATCH" && <div className="mt-1 text-slate-400">{c.why}</div>}</div></Td>
         </tr>
       ))}
     </Table>
@@ -38,7 +38,7 @@ export default function DeploymentDetail() {
   return (
     <div data-testid="deployment-detail-page">
       <PageHeader eyebrow={`${d.project.name} · deployment`} title={d.label}
-        description={`${d.network_name} · ${d.address}`}
+        description={<span className="break-all">{d.network_name} · <span className="font-mono text-[13px]">{d.address}</span></span>}
         actions={<>
           <StatusBadge status={d.verification_status || "NEVER"} pulse={d.verification_status === "DRIFT"} testId="deployment-status-badge" />
           <StatusBadge status={d.observation_mode || "UNKNOWN"} />
@@ -51,23 +51,24 @@ export default function DeploymentDetail() {
         </>} />
       {d.simulated && <div className="mb-6 rounded-md border border-violet-500/30 bg-violet-500/[0.06] px-4 py-3 text-xs text-violet-200" data-testid="simulated-notice">SIMULATED deployment: observed state comes from an in-process simulator. No real chain, transaction or signature is involved.</div>}
       <Panel eyebrow={`Expected state v${d.expected.version} · ${d.expected.source}`} title="Expected vs observed" bodyClass="p-0" className="mb-6"
-        action={<div className="text-right font-mono text-[10.5px] text-slate-500">checked {ago(d.last_check_at)}<br />{d.last_block_ref || "no observation"}</div>}>
+        action={<div className="text-left font-mono text-[10.5px] text-slate-500 sm:text-right">checked {ago(d.last_check_at)}<br />{d.last_block_ref || "no observation"}</div>}>
         {d.last_error && <div className="border-b border-white/[0.06] px-5 py-3 text-xs text-amber-300">Observation unavailable: {d.last_error}. Missing data is not treated as drift.</div>}
-        <ComparisonTable rows={d.comparisons} />
+        {d.comparisons.length ? <ComparisonTable rows={d.comparisons} /> : <div className="p-5 text-xs text-slate-500" data-testid="comparison-empty">No comparison rows yet. Run “Verify now” to observe the chain and compare against the expected state.</div>}
       </Panel>
       <div className="grid gap-6 xl:grid-cols-3">
         <Panel title="Identity & provenance">
           <KV k="Release"><Link className="vx-link" to={`/app/releases/${d.release_id}`}>{d.release?.version}</Link> <StatusBadge status={d.release?.status} /></KV>
           <KV k="Manifest">{d.release?.manifest_hash ? <Hash value={d.release.manifest_hash} /> : "—"}</KV>
           <KV k="Attestation">{d.attestation ? <Hash value={d.attestation.statement_hash} /> : <StatusBadge status="UNAVAILABLE" label="not attested" />}</KV>
-          <KV k="Freshness"><StatusBadge status={d.freshness} /> <span className="ml-1 text-xs text-slate-500">{fmtTime(d.last_observed_at)}</span></KV>
-          <KV k="Integration"><StatusBadge status={ns.label} /> <span className="ml-1 font-mono text-[11px] text-slate-500">{ns.rpc_host}</span></KV>
+          <KV k="Freshness"><StatusBadge status={d.freshness} /><span className="text-xs text-slate-500">{fmtTime(d.last_observed_at)}</span></KV>
+          <KV k="Integration"><StatusBadge status={ns.label} /><span className="break-all font-mono text-[11px] text-slate-500">{ns.rpc_host}</span></KV>
         </Panel>
         <Panel eyebrow="Authority" title="Permission observations" bodyClass="p-0">
           <div className="max-h-80 overflow-y-auto">
+            {!d.permissions.length && <div className="p-5 text-xs text-slate-500">No privileged-authority fields observed for this deployment.</div>}
             {d.permissions.map((p) => (
               <div key={p.id} className="border-b border-white/[0.05] px-5 py-3 text-xs">
-                <div className="flex items-center justify-between"><span className="font-mono text-slate-300">{p.field}</span><StatusBadge status={p.review_status} /></div>
+                <div className="flex flex-wrap items-center justify-between gap-2"><span className="break-all font-mono text-slate-300">{p.field}</span><StatusBadge status={p.review_status} /></div>
                 <div className="mt-1 break-all font-mono text-[11px] text-slate-400">{p.previous && <span className="text-slate-600 line-through">{p.previous} </span>}{p.value}</div>
                 <div className="mt-1 text-[10.5px] text-slate-500">{p.verification} · {ago(p.observed_at)}</div>
               </div>
@@ -77,20 +78,26 @@ export default function DeploymentDetail() {
         <Panel eyebrow="Response" title="Drift & incidents" bodyClass="p-0">
           {d.incidents.map((i) => (
             <Link key={i.id} to={`/app/incidents/${i.id}`} data-testid={`deployment-incident-${i.id}`} className="block border-b border-white/[0.05] px-5 py-3 transition-colors duration-150 hover:bg-white/[0.02]">
-              <div className="flex items-center justify-between"><span className="font-mono text-xs text-slate-200">{i.number}</span><StatusBadge status={i.status} /></div>
+              <div className="flex flex-wrap items-center justify-between gap-2"><span className="font-mono text-xs text-slate-200">{i.number}</span><StatusBadge status={i.status} /></div>
               <div className="mt-1 text-[11px] text-slate-500">{i.title}</div>
             </Link>
           ))}
           {d.drift_events.slice(0, 6).map((e) => (
-            <div key={e.id} className="flex items-center justify-between border-b border-white/[0.05] px-5 py-2.5 text-xs"><span className="font-mono">{e.field}</span><span className="flex gap-2"><StatusBadge status={e.severity} /><StatusBadge status={e.status} /></span></div>
+            <div key={e.id} className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.05] px-5 py-2.5 text-xs"><span className="break-all font-mono">{e.field}</span><span className="flex flex-wrap gap-2"><StatusBadge status={e.severity} /><StatusBadge status={e.status} /></span></div>
           ))}
           {!d.incidents.length && !d.drift_events.length && <div className="p-5 text-xs text-slate-500">No drift recorded for this deployment.</div>}
         </Panel>
       </div>
       <Panel title="Expected-state history & observations" className="mt-6">
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="space-y-2">{d.expected_history.map((x) => <div key={x.id} className="font-mono text-[11px] text-slate-400">v{x.version} · {x.source} · {x.created_by} · {fmtTime(x.created_at)}</div>)}</div>
-          <div className="space-y-2">{d.observations.map((o) => <div key={o.id} className="flex gap-2 font-mono text-[11px] text-slate-400"><StatusBadge status={o.mode} />{o.block_ref || o.error} · {ago(o.observed_at)}</div>)}</div>
+          <div className="space-y-2">
+            {!d.expected_history.length && <div className="text-xs text-slate-500">No expected-state versions recorded.</div>}
+            {d.expected_history.map((x) => <div key={x.id} className="break-words font-mono text-[11px] text-slate-400">v{x.version} · {x.source} · {x.created_by} · {fmtTime(x.created_at)}</div>)}
+          </div>
+          <div className="space-y-2">
+            {!d.observations.length && <div className="text-xs text-slate-500">No observations yet.</div>}
+            {d.observations.map((o) => <div key={o.id} className="flex flex-wrap items-center gap-2 font-mono text-[11px] text-slate-400"><StatusBadge status={o.mode} /><span className="break-all">{o.block_ref || o.error} · {ago(o.observed_at)}</span></div>)}
+          </div>
         </div>
       </Panel>
     </div>

@@ -54,14 +54,14 @@ export function Hash({ value, short = true, className, testId }) {
 export function Panel({ title, eyebrow, action, children, className, testId, bodyClass }) {
   return (
     <motion.section initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
-      data-testid={testId} className={cn("vx-panel", className)}>
+      data-testid={testId} className={cn("vx-panel min-w-0", className)}>
       {(title || action) && (
-        <header className="flex items-start justify-between gap-4 border-b border-white/[0.06] px-5 py-4">
-          <div>
-            {eyebrow && <div className="vx-eyebrow mb-1">{eyebrow}</div>}
+        <header className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3 border-b border-white/[0.06] px-5 py-4">
+          <div className="min-w-0">
+            {eyebrow && <div className="vx-eyebrow mb-1 break-words">{eyebrow}</div>}
             {title && <h3 className="text-[15px] font-medium text-slate-100">{title}</h3>}
           </div>
-          {action}
+          {action && <div className="flex min-w-0 flex-wrap items-center gap-2">{action}</div>}
         </header>
       )}
       <div className={cn("p-5", bodyClass)}>{children}</div>
@@ -72,12 +72,12 @@ export function Panel({ title, eyebrow, action, children, className, testId, bod
 export function PageHeader({ eyebrow, title, description, actions }) {
   return (
     <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-      <div className="max-w-3xl">
-        {eyebrow && <div className="vx-eyebrow mb-2 text-emerald-400/80">{eyebrow}</div>}
-        <h1 className="text-2xl font-semibold text-slate-50 sm:text-3xl">{title}</h1>
-        {description && <p className="mt-2 text-sm leading-relaxed text-slate-400">{description}</p>}
+      <div className="min-w-0 max-w-3xl">
+        {eyebrow && <div className="vx-eyebrow mb-2 break-words text-emerald-400/80">{eyebrow}</div>}
+        <h1 className="break-words text-2xl font-semibold text-slate-50 sm:text-3xl">{title}</h1>
+        {description && <p className="mt-2 break-words text-sm leading-relaxed text-slate-400">{description}</p>}
       </div>
-      {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+      {actions && <div className="flex min-w-0 flex-wrap items-center gap-2">{actions}</div>}
     </div>
   );
 }
@@ -106,9 +106,9 @@ export function ErrorNote({ error }) {
 
 export function KV({ k, children }) {
   return (
-    <div className="grid grid-cols-[140px_1fr] gap-3 border-b border-white/[0.05] py-2 text-sm last:border-0">
+    <div className="grid grid-cols-1 gap-1 border-b border-white/[0.05] py-2 text-sm last:border-0 sm:grid-cols-[140px_minmax(0,1fr)] sm:gap-3">
       <div className="font-mono text-[11px] uppercase tracking-wider text-slate-500">{k}</div>
-      <div className="min-w-0 break-words text-slate-200">{children}</div>
+      <div className="flex min-w-0 flex-wrap items-center gap-x-1 gap-y-1 break-words text-slate-200">{children}</div>
     </div>
   );
 }

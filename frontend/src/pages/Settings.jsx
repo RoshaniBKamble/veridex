@@ -1,9 +1,10 @@
 import { useApi } from "@/lib/hooks";
-import { Hash, KV, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
+import { ErrorNote, Hash, KV, Loading, PageHeader, Panel, StatusBadge } from "@/components/vx/Primitives";
 
 export default function Settings() {
-  const { data, isLoading } = useApi("settings", "/settings");
+  const { data, isLoading, error } = useApi("settings", "/settings");
   if (isLoading) return <Loading />;
+  if (error || !data) return <div data-testid="settings-page"><PageHeader eyebrow="System" title="Settings & configuration" /><ErrorNote error="Could not load configuration status from the API." /></div>;
   return (
     <div data-testid="settings-page">
       <PageHeader eyebrow="System" title="Settings & configuration" description="Secrets live only in server-side environment variables. This page shows whether they are set — never their values." />
@@ -21,10 +22,10 @@ export default function Settings() {
           <KV k="Stale after">{data.stale_after_minutes} minutes</KV>
         </Panel>
         <Panel title="AI & contracts">
-          <KV k="AI provider"><StatusBadge status={data.ai.configured ? "CONNECTED" : "UNAVAILABLE"} /> <span className="ml-1 font-mono text-[11px] text-slate-400">{data.ai.model}</span></KV>
+          <KV k="AI provider"><StatusBadge status={data.ai.configured ? "CONNECTED" : "UNAVAILABLE"} /><span className="font-mono text-[11px] text-slate-400">{data.ai.model}</span></KV>
           <KV k="AI policy">{data.ai.policy}</KV>
-          <KV k="Registry">{data.registry_contract.path}</KV>
-          <KV k="Status"><StatusBadge status="VERIFIED" label="compiled & unit-tested locally" /> <StatusBadge status="UNAVAILABLE" label="not deployed" className="ml-1" /></KV>
+          <KV k="Registry"><span className="break-all font-mono text-xs">{data.registry_contract.path}</span></KV>
+          <KV k="Status"><StatusBadge status="VERIFIED" label="compiled & unit-tested locally" /><StatusBadge status="UNAVAILABLE" label="not deployed" /></KV>
           <KV k="API docs"><a className="vx-link" href={`${process.env.REACT_APP_BACKEND_URL}/api/docs`} target="_blank" rel="noreferrer">/api/docs (OpenAPI)</a></KV>
         </Panel>
       </div>

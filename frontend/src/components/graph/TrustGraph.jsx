@@ -1,6 +1,6 @@
-import { Component, lazy, Suspense, useMemo, useState } from "react";
+import { Component, lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Layers } from "lucide-react";
+import { Box, Layers, Maximize2 } from "lucide-react";
 import { StatusBadge, Hash } from "@/components/vx/Primitives";
 import TrustGraph2D from "./TrustGraph2D";
 import { STATUS_COLOR, TYPE_LABEL, pathSets } from "./graphUtils";
@@ -45,39 +45,73 @@ function NodeDetail({ node, interactive }) {
   );
 }
 
+function useContainerSize(height, ref) {
+  const [s, setS] = useState({ h: height, w: 1200 });
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const calc = () => {
+      const w = el.clientWidth || window.innerWidth;
+      setS({ w, h: Math.round(Math.min(height, Math.max(340, w * 0.62))) });
+    };
+    calc();
+    const ro = new ResizeObserver(calc);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [height, ref]);
+  return s;
+}
+
 export function TrustGraph({ graph, height = 560, compact = false, interactive = true }) {
   const [mode, setMode] = useState(() => (webglOk() ? "3d" : "2d"));
   const [selected, setSelected] = useState(null);
+  const [fitKey, setFitKey] = useState(0);
+  const chosen = useRef(false);
+  const box = useRef(null);
+  const { h, w } = useContainerSize(height, box);
+  const narrow = w < 640;
+  useEffect(() => { if (narrow && !chosen.current) setMode("2d"); }, [narrow]);
+  const pickMode = (m) => { chosen.current = true; setMode(m); };
   const path = useMemo(() => pathSets(graph), [graph]);
-  const fallback = <TrustGraph2D graph={graph} selected={selected} onSelect={setSelected} path={path} height={height} />;
+  const empty = !graph?.nodes?.length;
+  const fallback = <TrustGraph2D graph={graph} selected={selected} onSelect={setSelected} path={path} height={h} />;
   return (
-    <div className={cn("grid gap-4", !compact && "xl:grid-cols-[1fr_280px]")} data-testid="trust-graph">
-      <div className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-[#07090D]">
-        <div className="absolute left-3 top-3 z-10 flex rounded border border-white/10 bg-[#0B0E14]/90 p-0.5 backdrop-blur">
+    <div className={cn("grid min-w-0 gap-4", !compact && "xl:grid-cols-[minmax(0,1fr)_280px]")} data-testid="trust-graph">
+      <div ref={box} className="relative min-w-0 overflow-hidden rounded-lg border border-white/[0.08] bg-[#07090D]">
+        <div className="absolute left-3 top-3 z-10 flex rounded border border-white/10 bg-[#0B0E14]/90 p-0.5 backdrop-blur" role="group" aria-label="Graph view mode">
           {[["3d", Box, "3D"], ["2d", Layers, "2D"]].map(([m, Icon, l]) => (
-            <button key={m} data-testid={`graph-mode-${m}`} onClick={() => setMode(m)} disabled={m === "3d" && !webglOk()}
+            <button key={m} data-testid={`graph-mode-${m}`} onClick={() => pickMode(m)} disabled={m === "3d" && !webglOk()} aria-pressed={mode === m}
+              title={m === "3d" && !webglOk() ? "WebGL unavailable in this browser — 2D view shown" : `${l} view`}
               className={cn("flex items-center gap-1 rounded px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider transition-colors duration-150 disabled:opacity-30",
                 mode === m ? "bg-emerald-500/15 text-emerald-300" : "text-slate-400 hover:text-slate-200")}>
               <Icon className="h-3 w-3" />{l}
             </button>
           ))}
+          {mode === "3d" && (
+            <button data-testid="graph-fit-btn" onClick={() => setFitKey((k) => k + 1)} aria-label="Fit graph to view" title="Fit graph to view"
+              className="flex items-center gap-1 rounded px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-slate-400 transition-colors duration-150 hover:text-slate-200">
+              <Maximize2 className="h-3 w-3" />Fit
+            </button>
+          )}
         </div>
         {path.nodes.size > 0 && (
           <div className="absolute right-3 top-3 z-10 rounded border border-red-500/40 bg-red-950/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-red-300" data-testid="graph-incident-path-indicator">
             Incident path highlighted
           </div>
         )}
-        {mode === "3d" ? (
+        {empty ? (
+          <div style={{ height: h }} className="grid place-items-center px-6 text-center font-mono text-xs text-slate-500" data-testid="graph-empty">No graph records yet. Create a release and add evidence to populate the trust graph.</div>
+        ) : mode === "3d" ? (
           <GLBoundary fallback={fallback}>
-            <Suspense fallback={<div style={{ height }} className="grid place-items-center font-mono text-xs text-slate-500">Initialising WebGL…</div>}>
-              <TrustGraph3D graph={graph} selected={selected} onSelect={setSelected} path={path} height={height} compact={compact} />
+            <Suspense fallback={<div style={{ height: h }} className="grid place-items-center font-mono text-xs text-slate-500">Initialising WebGL…</div>}>
+              <TrustGraph3D graph={graph} selected={selected} onSelect={setSelected} path={path} height={h} compact={compact} dense={narrow} fitKey={fitKey} />
             </Suspense>
           </GLBoundary>
         ) : fallback}
         <div className="border-t border-white/[0.06] px-4 py-2.5"><Legend /></div>
       </div>
-      {!compact && <div className="vx-panel p-5"><NodeDetail node={selected} interactive={interactive} /></div>}
-      {compact && selected && <div className="vx-panel p-4"><NodeDetail node={selected} interactive={interactive} /></div>}
+      {!compact && <div className="vx-panel min-w-0 p-5"><NodeDetail node={selected} interactive={interactive} /></div>}
+      {compact && selected && <div className="vx-panel min-w-0 p-4"><NodeDetail node={selected} interactive={interactive} /></div>}
     </div>
   );
 }
