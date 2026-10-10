@@ -1,0 +1,167 @@
+{
+  "project_name": "VERIDEX",
+  "tagline": "Verify what you build. Prove what you deploy.",
+  "mission": "Verifiable trust infrastructure for onchain applications: release evidence, SHA-256 canonical hashing, Ed25519 attestations, deployment verification, RPC state inspection, expected-vs-observed drift detection, and interactive 3D Trust Graph.",
+  "theme_strategy": {
+    "default_theme": "dark",
+    "theme_description": "Dark, bold, sophisticated, futuristic, precise, and premium. Tactical telemetry aesthetic inspired by Palantir Foundry, high-assurance aerospace telemetry, and cryptographically verifiable systems. Strictly avoids AI slop, purple gradients, childish emojis, and fake console gimmicks.",
+    "background_hierarchy": {
+      "app_canvas": "#07090D",
+      "surface_base": "#0B0E14",
+      "surface_card": "#10141D",
+      "surface_elevated": "#161B26",
+      "surface_highlight": "#1C2331",
+      "subtle_border": "rgba(255, 255, 255, 0.08)",
+      "active_border": "rgba(255, 255, 255, 0.16)",
+      "focused_border": "rgba(16, 185, 129, 0.45)"
+    }
+  },
+  "typography": {
+    "heading_font": "Outfit, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    "body_font": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+    "mono_font": "JetBrains Mono, 'Fira Code', 'Courier New', monospace",
+    "hierarchy": {
+      "h1_hero": "text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-slate-100",
+      "h2_section": "text-2xl sm:text-3xl font-semibold tracking-tight text-slate-100",
+      "h3_subsection": "text-xl sm:text-2xl font-medium tracking-tight text-slate-200",
+      "h4_card_title": "text-base sm:text-lg font-medium text-slate-200",
+      "eyebrow_label": "text-xs font-mono font-medium tracking-[0.18em] uppercase text-slate-400",
+      "body_regular": "text-sm sm:text-base text-slate-300 leading-relaxed",
+      "body_muted": "text-xs sm:text-sm text-slate-400 leading-normal",
+      "hash_code": "text-xs font-mono text-emerald-400/95 tracking-wider bg-emerald-950/30 px-2 py-0.5 rounded border border-emerald-500/20"
+    }
+  },
+  "colors": {
+    "palette": {
+      "canvas": "#07090D",
+      "surface_dark": "#0B0E14",
+      "surface_card": "#10141D",
+      "surface_border": "rgba(255, 255, 255, 0.08)",
+      "verified_emerald": {
+        "text": "#10B981",
+        "bg_subtle": "rgba(16, 185, 129, 0.08)",
+        "border": "rgba(16, 185, 129, 0.3)",
+        "glow": "rgba(16, 185, 129, 0.2)"
+      },
+      "warning_amber": {
+        "text": "#F59E0B",
+        "bg_subtle": "rgba(245, 158, 11, 0.08)",
+        "border": "rgba(245, 158, 11, 0.3)",
+        "glow": "rgba(245, 158, 11, 0.25)"
+      },
+      "critical_red": {
+        "text": "#EF4444",
+        "bg_subtle": "rgba(239, 68, 68, 0.12)",
+        "border": "rgba(239, 68, 68, 0.4)",
+        "glow": "rgba(239, 68, 68, 0.3)"
+      },
+      "infrastructure_violet": {
+        "text": "#8B5CF6",
+        "bg_subtle": "rgba(139, 92, 246, 0.08)",
+        "border": "rgba(139, 92, 246, 0.25)"
+      },
+      "electric_blue": {
+        "text": "#0EA5E9",
+        "bg_subtle": "rgba(14, 165, 233, 0.08)",
+        "border": "rgba(14, 165, 233, 0.25)"
+      }
+    },
+    "rules": [
+      "No full-bleed purple or rainbow AI gradients.",
+      "Strict dark mode baseline with warm graphite depth.",
+      "Emerald (#10B981) reserved strictly for verified / signed / healthy states.",
+      "Amber (#F59E0B) for pending reviews, low telemetry drift, or warnings.",
+      "Red (#EF4444) strictly for critical production drift, compromised authority, or signature mismatches.",
+      "Violet (#8B5CF6) and Electric Blue (#0EA5E9) for RPC nodes, chains, and infrastructure metadata."
+    ]
+  },
+  "visual_enhancers": {
+    "grid_pattern": "Tactical subtle 24px grid overlay (rgba(255,255,255,0.03)) to ground the technical precision.",
+    "borders": "1px fine solid strokes (border-white/10 or border-emerald-500/20) with 6px-8px subtle border radii.",
+    "shadows": "Deep crisp ambient shadows: shadow-[0_4px_24px_rgba(0,0,0,0.6)] with 1px inner highlight border.",
+    "badges": "Structured tactical pills with a pulsing indicator dot, font-mono label, and high-contrast status text."
+  },
+  "killer_demo_specification": {
+    "feature": "SIMULATE DRIFT",
+    "trigger_element_test_id": "simulate-drift-btn",
+    "reset_element_test_id": "reset-drift-btn",
+    "banner_test_id": "critical-drift-banner",
+    "behavior": "When clicked: 1) Sets system state to DRIFT_CRITICAL. 2) Injects banner across the top: 'CRITICAL PRODUCTION DRIFT — Production no longer matches the approved state. Bytecode hash mismatch detected on Ethereum Mainnet contract 0x7a25...'. 3) Injects linked incident INC-8924 into Incident Center. 4) Updates the 3D Trust Graph by coloring the deployment node blazing red and showing an animated pulsing red shockwave link. 5) Shows audit differential: Expected SHA256 vs Observed SHA256 bytecode hash."
+  },
+  "trust_graph_specification": {
+    "mode": "Dual-mode: 3D Canvas with 2D Fallback SVG / HTML node graph toggle.",
+    "r3f_package_note": "If @react-three/fiber is installed, render the interactive 3D orb/node graph with Canvas, OrbitControls, and floating nodes for: Commit/Repo -> Release Artifact -> Ed25519 Attestation -> Ethereum/Solana RPC -> Live Verified Deployment. If unavailable or disabled by user toggle, gracefully fallback to the high-tech 2D interactive topological SVG graph.",
+    "interactive_nodes": [
+      {"id": "source", "name": "GitHub Commit (main@7f2a1c)", "type": "SOURCE", "status": "VERIFIED"},
+      {"id": "build", "name": "Canonical SHA-256 Artifact", "type": "BUILD", "status": "VERIFIED"},
+      {"id": "attest", "name": "Ed25519 Multi-Sig Attestation", "type": "ATTESTATION", "status": "VERIFIED"},
+      {"id": "deploy_eth", "name": "Ethereum Core Vault (0x7a250d...)", "type": "DEPLOYMENT", "status": "DRIFT_TARGET"},
+      {"id": "deploy_sol", "name": "Solana Program (VRD4...9z)", "type": "DEPLOYMENT", "status": "VERIFIED"},
+      {"id": "rpc_eth", "name": "Alchemy RPC Node (Block #21,894,102)", "type": "RPC", "status": "VERIFIED"}
+    ]
+  },
+  "command_centers": {
+    "founder_command_center": {
+      "focus": "Transparent Trust Score (98.4% -> 74.2% on drift), High-level compliance health, Risk exposure summary, Executive sign-off logs, Time-to-attestation KPI.",
+      "widgets": ["Composite Trust Index with 5 verifiable vector gauges", "Active Protection Summary", "Recent Cross-chain Invocations", "One-click audit export"]
+    },
+    "developer_command_center": {
+      "focus": "Canonical SHA-256 calculator & evidence builder, Raw RPC bytecode inspector, Diff visualizer (Expected vs Observed), CLI push token generator, Incident investigation terminal with AI Assistant."
+    }
+  },
+  "key_routes_and_views": [
+    {"id": "landing", "label": "Product", "path": "/"},
+    {"id": "founder_overview", "label": "Executive Cockpit", "path": "/founder"},
+    {"id": "developer_overview", "label": "Developer Ops", "path": "/developer"},
+    {"id": "projects", "label": "Projects & Contracts", "path": "/projects"},
+    {"id": "releases", "label": "Releases & Evidence", "path": "/releases"},
+    {"id": "deployments", "label": "Deployments & State", "path": "/deployments"},
+    {"id": "trust_graph", "label": "3D Trust Graph", "path": "/trust-graph"},
+    {"id": "incidents", "label": "Incidents & Drift", "path": "/incidents"},
+    {"id": "ai_investigator", "label": "AI Investigation", "path": "/ai-investigator"},
+    {"id": "integrations", "label": "RPC & Integrations", "path": "/integrations"},
+    {"id": "settings", "label": "Authority & Keys", "path": "/settings"}
+  ],
+  "image_urls": [
+    {
+      "category": "hero_and_security_visual",
+      "description": "Abstract cryptographic blockchain network nodes for hero and security showcases",
+      "image_url": "https://images.unsplash.com/photo-1639322537228-f710d846310a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwxfHxjeWJlciUyMHNlY3VyaXR5JTIwZGF0YSUyMG5ldHdvcmslMjBhYnN0cmFjdHxlbnwwfHx8fDE3OTE2NTc3NjF8MA&ixlib=rb-4.1.0&q=85"
+    },
+    {
+      "category": "telemetry_network_matrix",
+      "description": "Tactical telemetry matrix data grid for RPC state and node inspection background",
+      "image_url": "https://images.unsplash.com/photo-1590859808308-3d2d9c515b1a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwzfHxjeWJlciUyMHNlY3VyaXR5JTIwZGF0YSUyMG5ldHdvcmslMjBhYnN0cmFjdHxlbnwwfHx8fDE3OTE2NTc3NjF8MA&ixlib=rb-4.1.0&q=85"
+    },
+    {
+      "category": "datacenter_cluster",
+      "description": "High-assurance server nodes for enterprise RPC telemetry",
+      "image_url": "https://images.unsplash.com/photo-1561233835-f937539b95b9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwyfHxjeWJlciUyMHNlY3VyaXR5JTIwZGF0YSUyMG5ldHdvcmslMjBhYnN0cmFjdHxlbnwwfHx8fDE3OTE2NTc3NjF8MA&ixlib=rb-4.1.0&q=85"
+    }
+  ],
+  "integration_status_labels": {
+    "live": {"label": "LIVE RPC", "class": "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"},
+    "demo": {"label": "SIMULATED ENCLAVE", "class": "bg-sky-500/10 text-sky-400 border-sky-500/30"},
+    "unavailable": {"label": "UNAVAILABLE / OFFLINE", "class": "bg-zinc-800 text-zinc-400 border-zinc-700"}
+  },
+  "instructions_to_main_agent": [
+    "Never introduce any Emergent branding in product UI.",
+    "Do not use generic SaaS templates with centered text and pastel purple gradients. Adhere strictly to the tactical Palantir-inspired dark design system with graphite, neon emerald, warning amber, and alert red.",
+    "Every testable action MUST have the required data-testid attributes: 'simulate-drift-btn', 'reset-drift-btn', 'critical-drift-banner', 'trust-score-metric', 'nav-founder-cockpit', 'nav-developer-ops', 'nav-trust-graph', 'nav-releases', 'nav-deployments', 'nav-incidents', 'nav-ai-investigator', 'nav-integrations'.",
+    "All navigation bars must have solid or heavy crystal glass backgrounds (bg-[#0B0E14]/90 backdrop-blur-md) with 1px border-b border-white/10. Never use pure transparent navigation.",
+    "Include both the interactive 3D Trust Graph and the instant 2D Fallback view switch so the user can inspect cryptographic lineage smoothly.",
+    "Provide the killer demo banner with high priority visual weight whenever drift is simulated.",
+    "Ensure hash displays feature easy one-click copy with Sonner toast feedback ('SHA-256 Copied to clipboard')."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy and tactical borders.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur) on sticky headers and flyouts.",
+    "You MUST NOT apply universal transition (e.g. transition: all). Add transitions to specific interactive properties.",
+    "You MUST NOT center align the app container. Do not add .App { text-align: center; }.",
+    "Never use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 for icons. Use lucide-react tactical icons exclusively.",
+    "Every interaction needs micro-animations - hover states, transitions, and entrance animations.",
+    "Containers with borders must have internal padding (p-6 or p-8) to prevent text collision."
+  ]
+}

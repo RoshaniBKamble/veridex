@@ -1,0 +1,415 @@
+{
+  "compiler": "0.8.24+commit.e11b9ed9.Emscripten.clang",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "initialOwner",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "AlreadyRegistered",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "AlreadyRevoked",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotAttestor",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotPendingOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "UnknownAttestation",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ZeroValue",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "evidenceHash",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "releaseId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "attestor",
+          "type": "address"
+        }
+      ],
+      "name": "AttestationRegistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "by",
+          "type": "address"
+        }
+      ],
+      "name": "AttestationRevoked",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "attestor",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "allowed",
+          "type": "bool"
+        }
+      ],
+      "name": "AttestorUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferStarted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "attestationOfHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "evidenceHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "releaseId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "address",
+          "name": "attestor",
+          "type": "address"
+        }
+      ],
+      "name": "computeId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getAttestation",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "evidenceHash",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "releaseId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "address",
+              "name": "attestor",
+              "type": "address"
+            },
+            {
+              "internalType": "uint64",
+              "name": "timestamp",
+              "type": "uint64"
+            },
+            {
+              "internalType": "bool",
+              "name": "revoked",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct VeridexAttestationRegistry.Attestation",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "isAttestor",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pendingOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "evidenceHash",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "releaseId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "register",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "name": "revoke",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "attestor",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "allowed",
+          "type": "bool"
+        }
+      ],
+      "name": "setAttestor",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "evidenceHash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "verify",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "valid",
+          "type": "bool"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "id",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bin": "608060405234801561000f575f80fd5b50604051610a0f380380610a0f83398101604081905261002e916100a2565b6001600160a01b03811661005557604051637c946ed760e01b815260040160405180910390fd5b5f80546001600160a01b0319166001600160a01b03831690811782556040519091907f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0908290a3506100cf565b5f602082840312156100b2575f80fd5b81516001600160a01b03811681146100c8575f80fd5b9392505050565b610933806100dc5f395ff3fe608060405234801561000f575f80fd5b50600436106100b1575f3560e01c80638da5cb5b1161006e5780638da5cb5b14610173578063a3112a641461019d578063b75c7dc614610202578063be8a9c8e14610215578063e30c397814610228578063f2fde38b1461023b575f80fd5b80632e2f4e24146100b55780632f926732146100ec57806341724dd01461010d5780635ce2edbf1461012257806375e366161461014157806379ba50971461016b575b5f80fd5b6100d76100c336600461083b565b60026020525f908152604090205460ff1681565b60405190151581526020015b60405180910390f35b6100ff6100fa36600461085b565b61024e565b6040519081526020016100e3565b61012061011b36600461087b565b6103de565b005b6100ff6101303660046108b4565b60046020525f908152604090205481565b61015461014f3660046108b4565b61048e565b6040805192151583526020830191909152016100e3565b6101206104f5565b5f54610185906001600160a01b031681565b6040516001600160a01b0390911681526020016100e3565b6101b06101ab3660046108b4565b610576565b6040516100e3919081518152602080830151908201526040808301516001600160a01b03169082015260608083015167ffffffffffffffff169082015260809182015115159181019190915260a00190565b6101206102103660046108b4565b610644565b6100ff6102233660046108cb565b61073b565b600154610185906001600160a01b031681565b61012061024936600461083b565b61077f565b335f9081526002602052604081205460ff1661027d57604051631bbc651f60e31b815260040160405180910390fd5b821580610288575081155b156102a657604051637c946ed760e01b815260040160405180910390fd5b5f83815260046020526040902054156102ef575f83815260046020819052604091829020549151633be57b3960e11b81526102e692910190815260200190565b60405180910390fd5b6102fa83833361073b565b6040805160a08101825285815260208082018681523383850181815267ffffffffffffffff428116606087019081525f608088018181528a8252600388528982209851895595516001890155925160029097018054915195511515600160e01b0260ff60e01b1996909316600160a01b026001600160e01b03199092166001600160a01b03909816979097171793909316929092179093558781526004825283902084905591519081529192508391859184917fd431944ee4a49f4ed5875aef76d860b22ae231ff90f249d402651cbaa4b2970f910160405180910390a492915050565b5f546001600160a01b03163314610408576040516330cd747160e01b815260040160405180910390fd5b6001600160a01b03821661042f57604051637c946ed760e01b815260040160405180910390fd5b6001600160a01b0382165f81815260026020908152604091829020805460ff191685151590811790915591519182527f93b8543bdf0aade4f1b01f7bc7eccaa0d387724a3b85d45b5edb4c03bd8824b591015b60405180910390a25050565b5f818152600460209081526040808320548084526003909252822081158015906104c457506002810154600160e01b900460ff16155b80156104ed57506002818101546001600160a01b03165f908152602091909152604090205460ff165b925050915091565b6001546001600160a01b0316331461052057604051630614e5c760e21b815260040160405180910390fd5b5f805460405133926001600160a01b03909216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a35f80546001600160a01b03199081163317909155600180549091169055565b6040805160a0810182525f808252602082018190529181018290526060810182905260808101919091525f828152600360205260409020600201546001600160a01b03166105da57604051631d4a788f60e21b8152600481018390526024016102e6565b505f90815260036020908152604091829020825160a08101845281548152600182015492810192909252600201546001600160a01b03811692820192909252600160a01b820467ffffffffffffffff166060820152600160e01b90910460ff161515608082015290565b5f81815260036020526040902060028101546001600160a01b031661067f57604051631d4a788f60e21b8152600481018390526024016102e6565b60028101546001600160a01b031633148015906106a657505f546001600160a01b03163314155b156106c457604051631bbc651f60e31b815260040160405180910390fd5b6002810154600160e01b900460ff16156106f4576040516390315de160e01b8152600481018390526024016102e6565b60028101805460ff60e01b1916600160e01b17905560405133815282907f59d1b98a5da8bbc1db92f7d8d2e21c3067da65edbe08f4ae23df11487ee4c8b090602001610482565b60408051602081018590529081018390526001600160a01b03821660608201525f906080016040516020818303038152906040528051906020012090509392505050565b5f546001600160a01b031633146107a9576040516330cd747160e01b815260040160405180910390fd5b6001600160a01b0381166107d057604051637c946ed760e01b815260040160405180910390fd5b600180546001600160a01b0319166001600160a01b038381169182179092555f8054604051929316917f38d16b8cac22d99fc7c124b9cd0de2d3fa1faef420bfe791d8c362d765e227009190a350565b80356001600160a01b0381168114610836575f80fd5b919050565b5f6020828403121561084b575f80fd5b61085482610820565b9392505050565b5f806040838503121561086c575f80fd5b50508035926020909101359150565b5f806040838503121561088c575f80fd5b61089583610820565b9150602083013580151581146108a9575f80fd5b809150509250929050565b5f602082840312156108c4575f80fd5b5035919050565b5f805f606084860312156108dd575f80fd5b83359250602084013591506108f460408501610820565b9050925092509256fea2646970667358221220a49b63090f2e71d45143256dcfd9f31862af9a3bac4a569a9eb32df8d43ffa1164736f6c63430008180033"
+}

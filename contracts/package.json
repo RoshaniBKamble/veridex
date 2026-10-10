@@ -1,0 +1,11 @@
+{
+  "name": "veridex-contracts",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "compile": "node compile.js"
+  },
+  "dependencies": {
+    "solc": "0.8.24"
+  }
+}
